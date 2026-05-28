@@ -3,28 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgniveerX PRO 125</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>AgniveerX QUIZ PRO</title>
 
 <style>
 body{
 margin:0;
-font-family:Poppins;
+font-family:Arial;
 background:#0b1220;
-color:white;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+color:white;
 }
 
 .box{
+width:95%;
+max-width:750px;
 background:#1e293b;
 padding:20px;
 border-radius:15px;
-width:95%;
-max-width:700px;
 text-align:center;
 position:relative;
 }
@@ -32,12 +30,9 @@ position:relative;
 .top{
 display:flex;
 justify-content:space-between;
-font-size:14px;
 color:#fbbf24;
 margin-bottom:10px;
 }
-
-#timer{color:#00e6ff;}
 
 .option{
 background:#111827;
@@ -50,40 +45,17 @@ transition:0.2s;
 
 .option:hover{background:#00e6ff;color:black;}
 
-.correct{background:#22c55e !important;}
-.wrong{background:#ef4444 !important;}
+.correctFlash{background:#22c55e !important;}
+.wrongFlash{background:#ef4444 !important;}
 
 button{
-margin-top:12px;
+margin-top:10px;
 padding:8px 12px;
 border:none;
 border-radius:8px;
-cursor:pointer;
 background:#00e6ff;
 font-weight:bold;
-}
-
-.previewBox{
-position:absolute;
-top:50px;
-left:0;
-right:0;
-background:#0f172a;
-max-height:300px;
-overflow:auto;
-display:none;
-padding:10px;
-border-radius:10px;
-z-index:999;
-}
-
-.previewItem{
-padding:6px;
-margin:5px 0;
-background:#111827;
 cursor:pointer;
-border-radius:6px;
-font-size:12px;
 }
 </style>
 </head>
@@ -94,18 +66,15 @@ font-size:12px;
 
 <div class="top">
 <div id="section">START</div>
-<div id="timer">⏳ 15</div>
-<div>Score: <span id="score">0</span>/125</div>
+<div>Score: <span id="score">0</span>/110</div>
 </div>
 
 <h2 id="q">Loading...</h2>
-<div id="a"></div>
+<div id="options"></div>
 
-<button onclick="togglePreview()">👁 Preview</button>
+<button onclick="nextQ()">Next</button>
 
-<div class="previewBox" id="previewBox"></div>
-
-<div id="resultText"></div>
+<div id="result"></div>
 
 </div>
 
@@ -114,137 +83,171 @@ font-size:12px;
 
 <script>
 
-/* ================= QUIZ DATA ================= */
+let quiz=[];
 
-let quiz = [];
-
+/* ========= PUSH FUNCTION ========= */
 function add(sec,arr){
 arr.forEach(q=>{
-quiz.push({
-sec,
-q:q.q,
-o:q.o,
-c:q.c,
-diff:q.diff
-});
+quiz.push({sec,q:q.q,o:q.o,c:q.c});
 });
 }
 
-/* ================= HARD QUESTIONS ================= */
-
-/* PHYSICS (25) */
+/* ========== PHYSICS 25 HARD ========== */
 add("PHYSICS",[
-{q:"Unit of Planck constant?",o:["J·s","N","W","Pa"],c:0,diff:"Hard"},
-{q:"Which particle has no charge?",o:["Neutron","Proton","Electron","Photon"],c:0,diff:"Hard"},
-{q:"E=mc² belongs to?",o:["Relativity","Quantum","Newton","Thermo"],c:0,diff:"Hard"},
-{q:"SI unit of magnetic flux?",o:["Weber","Tesla","Henry","Gauss"],c:0,diff:"Hard"},
-{q:"Photon has?",o:["Massless","Massive","Negative charge","Positive charge"],c:0,diff:"Hard"},
-{q:"Ohm = ?",o:["V/A","A/V","W/V","J/s"],c:0,diff:"Hard"},
-{q:"Speed of EM wave in vacuum?",o:["3×10^8 m/s","3×10^6","5×10^8","1×10^7"],c:0,diff:"Hard"},
-{q:"Lens formula?",o:["1/f=1/v-1/u","F=ma","E=mc²","P=VI"],c:0,diff:"Hard"},
-{q:"Work-energy unit same?",o:["Joule","Watt","Volt","Newton"],c:0,diff:"Hard"},
-{q:"Sound cannot travel in?",o:["Vacuum","Solid","Liquid","Gas"],c:0,diff:"Hard"},
-{q:"SI unit capacitance?",o:["Farad","Ohm","Henry","Tesla"],c:0,diff:"Hard"},
-{q:"Acceleration due to gravity?",o:["9.8 m/s²","10","8","12"],c:0,diff:"Hard"},
-{q:"Power formula?",o:["P=VI","P=F/A","P=V/I","P=IR"],c:0,diff:"Hard"},
-{q:"Resistance unit?",o:["Ohm","Volt","Ampere","Watt"],c:0,diff:"Hard"},
-{q:"Current formula?",o:["I=V/R","I=VR","I=R/V","I=V+R"],c:0,diff:"Hard"},
-{q:"Wave speed formula?",o:["fλ","f/λ","λ/f","f+λ"],c:0,diff:"Hard"},
-{q:"Mirror used in car?",o:["Convex","Concave","Plane","None"],c:0,diff:"Hard"},
-{q:"Refraction law?",o:["Snell’s law","Ohm’s law","Newton law","Faraday law"],c:0,diff:"Hard"},
-{q:"SI unit energy?",o:["Joule","Watt","Volt","Newton"],c:0,diff:"Hard"},
-{q:"Frequency unit?",o:["Hertz","Newton","Joule","Watt"],c:0,diff:"Hard"},
-{q:"Light speed medium highest?",o:["Vacuum","Air","Water","Glass"],c:0,diff:"Hard"},
-{q:"Ohm law formula?",o:["V=IR","I=VR","V=I/R","R=VI"],c:0,diff:"Hard"},
-{q:"SI unit force?",o:["Newton","Joule","Watt","Volt"],c:0,diff:"Hard"},
-{q:"Energy equation?",o:["E=mc²","F=ma","P=VI","V=IR"],c:0,diff:"Hard"},
-{q:"Transformer works on?",o:["AC","DC","Heat","Light"],c:0,diff:"Hard"}
+{q:"Planck constant unit?",o:["J·s","N","W","Pa"],c:0},
+{q:"Photon has?",o:["No mass","Mass","Charge","None"],c:0},
+{q:"E=mc² related to?",o:["Relativity","Optics","Heat","Sound"],c:0},
+{q:"Ohm law?",o:["V=IR","P=VI","F=ma","E=mc²"],c:0},
+{q:"Sound cannot travel in?",o:["Vacuum","Solid","Liquid","Gas"],c:0},
+{q:"Speed of light?",o:["3×10^8","3×10^6","5×10^8","1×10^7"],c:0},
+{q:"Capacitance unit?",o:["Farad","Ohm","Volt","Joule"],c:0},
+{q:"Force unit?",o:["Newton","Joule","Watt","Volt"],c:0},
+{q:"Energy unit?",o:["Joule","Newton","Watt","Volt"],c:0},
+{q:"Frequency unit?",o:["Hz","Newton","Joule","Watt"],c:0},
+{q:"Wave speed?",o:["fλ","f/λ","λ/f","f+λ"],c:0},
+{q:"Mirror in car?",o:["Convex","Concave","Plane","None"],c:0},
+{q:"Lens formula?",o:["1/f=1/v-1/u","F=ma","P=VI","E=mc²"],c:0},
+{q:"Transformer works on?",o:["AC","DC","Heat","Light"],c:0},
+{q:"Gravity?",o:["9.8","10","8","12"],c:0},
+{q:"Power formula?",o:["P=VI","P=IR","P=V/R","P=F/A"],c:0},
+{q:"Refraction law?",o:["Snell","Ohm","Newton","Faraday"],c:0},
+{q:"Current formula?",o:["I=V/R","I=VR","I=R/V","I=V+R"],c:0},
+{q:"Resistance unit?",o:["Ohm","Volt","Ampere","Watt"],c:0},
+{q:"Work unit?",o:["Joule","Watt","Volt","Newton"],c:0},
+{q:"EM wave type?",o:["Transverse","Longitudinal","Static","None"],c:0},
+{q:"Energy formula?",o:["E=mc²","F=ma","P=VI","V=IR"],c:0},
+{q:"Capacitor stores?",o:["Charge","Heat","Light","Mass"],c:0},
+{q:"EM wave speed?",o:["3×10^8","3×10^6","5×10^8","1×10^7"],c:0},
+{q:"Work-energy unit same?",o:["Joule","Newton","Volt","Watt"],c:0}
 ]);
 
-/* MATH (25) */
+/* ========== MATH 25 VERY HARD ========== */
 add("MATH",[
-{q:"√196?",o:["14","12","16","18"],c:0,diff:"Hard"},
-{q:"25²?",o:["625","525","725","425"],c:0,diff:"Hard"},
-{q:"LCM of 8,12?",o:["24","16","20","28"],c:0,diff:"Hard"},
-{q:"HCF 24,36?",o:["12","6","8","4"],c:0,diff:"Hard"},
-{q:"3³?",o:["27","9","6","12"],c:0,diff:"Hard"},
-{q:"15% of 300?",o:["45","30","60","75"],c:0,diff:"Hard"},
-{q:"(a+b)²?",o:["a²+b²+2ab","a²-b²","a²+b²","2ab"],c:0,diff:"Hard"},
-{q:"π value?",o:["3.14","2.14","3.41","4.13"],c:0,diff:"Hard"},
-{q:"10²?",o:["100","200","50","150"],c:0,diff:"Hard"},
-{q:"√225?",o:["15","12","18","20"],c:0,diff:"Hard"},
-{q:"2⁵?",o:["32","16","64","8"],c:0,diff:"Hard"},
-{q:"100/4?",o:["25","20","30","15"],c:0,diff:"Hard"},
-{q:"Area of square formula?",o:["a²","2a","a³","4a"],c:0,diff:"Hard"},
-{q:"Cube of 4?",o:["64","16","32","48"],c:0,diff:"Hard"},
-{q:"√256?",o:["16","14","18","20"],c:0,diff:"Hard"},
-{q:"20% of 500?",o:["100","50","150","200"],c:0,diff:"Hard"},
-{q:"7×8?",o:["56","48","64","72"],c:0,diff:"Hard"},
-{q:"9×12?",o:["108","96","120","144"],c:0,diff:"Hard"},
-{q:"11²?",o:["121","111","131","141"],c:0,diff:"Hard"},
-{q:"30×3?",o:["90","60","120","150"],c:0,diff:"Hard"},
-{q:"15²?",o:["225","200","250","275"],c:0,diff:"Hard"},
-{q:"LCM 5,10?",o:["10","15","20","25"],c:0,diff:"Hard"},
-{q:"HCF 18,24?",o:["6","8","4","12"],c:0,diff:"Hard"},
-{q:"100-37?",o:["63","53","73","83"],c:0,diff:"Hard"},
-{q:"50×2?",o:["100","90","110","120"],c:0,diff:"Hard"}
+{q:"√784?",o:["28","26","24","30"],c:0},
+{q:"2^10?",o:["1024","512","2048","256"],c:0},
+{q:"log10(1000)?",o:["3","2","1","4"],c:0},
+{q:"det|1 2;3 4|?",o:["-2","2","0","4"],c:0},
+{q:"sin²+cos²=?",o:["1","0","2","π"],c:0},
+{q:"5!?",o:["120","60","24","720"],c:0},
+{q:"√625?",o:["25","20","30","15"],c:0},
+{q:"∫x dx?",o:["x²/2","x","2x","lnx"],c:0},
+{q:"limit sinx/x?",o:["1","0","∞","2"],c:0},
+{q:"(a-b)²?",o:["a²+b²-2ab","a²-b²","2ab","a²+b²"],c:0},
+{q:"3^5?",o:["243","125","81","512"],c:0},
+{q:"√400?",o:["20","25","15","30"],c:0},
+{q:"π approx?",o:["3.14","2.14","3.41","4.13"],c:0},
+{q:"LCM 12,18?",o:["36","24","18","12"],c:0},
+{q:"HCF 48,60?",o:["12","6","8","10"],c:0},
+{q:"100/0?",o:["Undefined","0","100","1"],c:0},
+{q:"Derivative x²?",o:["2x","x","x²","1"],c:0},
+{q:"Area circle?",o:["πr²","2πr","πd","r²"],c:0},
+{q:"tan45?",o:["1","0","√2","∞"],c:0},
+{q:"Probability max?",o:["1","0","10","100"],c:0},
+{q:"Euler identity?",o:["e^{iπ}+1=0","a²+b²","F=ma","E=mc²"],c:0},
+{q:"Matrix inverse?",o:["det≠0","det=0","0","1"],c:0},
+{q:"log(1)?",o:["0","1","∞","-1"],c:0},
+{q:"Cube root 27?",o:["3","9","6","12"],c:0},
+{q:"√256?",o:["16","14","18","20"],c:0}
 ]);
 
-/* ENGLISH (25) */
-add("ENGLISH",Array.from({length:25},(_,i)=>({
-q:"English hard Q "+(i+1),
-o:["Option A","Option B","Option C","Option D"],
-c:0,
-diff:"Hard"
-})));
+/* ========== GK 25 ========== */
+add("GK",[
+{q:"Capital Australia?",o:["Canberra","Sydney","Melbourne","Perth"],c:0},
+{q:"UN founded?",o:["1945","1947","1950","1939"],c:0},
+{q:"WHO HQ?",o:["Geneva","Paris","NY","London"],c:0},
+{q:"Longest river?",o:["Nile","Amazon","Ganga","Mississippi"],c:0},
+{q:"Largest ocean?",o:["Pacific","Atlantic","Indian","Arctic"],c:0},
+{q:"NASA country?",o:["USA","India","Russia","China"],c:0},
+{q:"India PM?",o:["President","PM","CM","Governor"],c:0},
+{q:"UNESCO works?",o:["Education","War","Trade","Finance"],c:0},
+{q:"Currency Japan?",o:["Yen","Won","Dollar","Euro"],c:0},
+{q:"India independence?",o:["1947","1950","1930","1960"],c:0},
+{q:"Largest desert?",o:["Sahara","Thar","Gobi","Kalahari"],c:0},
+{q:"UNO HQ?",o:["New York","London","Paris","Berlin"],c:0},
+{q:"ISRO full form?",o:["Indian Space Research Org","None","ISRO","Space Org"],c:0},
+{q:"First satellite India?",o:["Aryabhata","INSAT","Chandrayaan","Mangal"],c:0},
+{q:"BRICS?",o:["Brazil Russia India China SA","USA","UK","Japan"],c:0},
+{q:"Asia largest?",o:["Yes","No","Maybe","None"],c:0},
+{q:"National currency India?",o:["Rupee","Dollar","Yen","Euro"],c:0},
+{q:"UN chief?",o:["Guterres","Trump","Putin","Obama"],c:0},
+{q:"Capital USA?",o:["Washington DC","NY","LA","Chicago"],c:0},
+{q:"NATO HQ?",o:["Brussels","Paris","London","Berlin"],c:0},
+{q:"Climate summit?",o:["COP","G20","WHO","UN"],c:0},
+{q:"Largest continent?",o:["Asia","Africa","Europe","Australia"],c:0},
+{q:"Space agency USA?",o:["NASA","ISRO","ESA","JAXA"],c:0},
+{q:"India state head?",o:["President","PM","CM","Governor"],c:0},
+{q:"UNO works for?",o:["Peace","War","Money","Trade"],c:0}
+]);
 
-/* REASONING (25) */
-add("REASONING",Array.from({length:25},(_,i)=>({
-q:"Reasoning Q "+(i+1),
-o:["A","B","C","D"],
-c:0,
-diff:"Hard"
-})));
+/* ========== ENGLISH 25 ========== */
+add("ENGLISH",[
+{q:"Synonym Abundant?",o:["Plentiful","Rare","Empty","Small"],c:0},
+{q:"Antonym Opaque?",o:["Transparent","Dark","Heavy","Thick"],c:0},
+{q:"Past Arise?",o:["Arose","Arised","Arisen","Rise"],c:0},
+{q:"Meaning Benevolent?",o:["Kind","Cruel","Strong","Weak"],c:0},
+{q:"Plural Mouse?",o:["Mice","Mouses","Mouse","Mices"],c:0},
+{q:"Opposite Victory?",o:["Defeat","Win","Success","Gain"],c:0},
+{q:"Smart synonym?",o:["Intelligent","Dumb","Weak","Slow"],c:0},
+{q:"Opposite Bright?",o:["Dark","Light","Glow","Shine"],c:0},
+{q:"Meaning Rapidly?",o:["Quickly","Slowly","Late","Hard"],c:0},
+{q:"Prefix possible?",o:["Im","Un","Re","Dis"],c:0},
+{q:"Article vowel?",o:["an","a","the","no"],c:0},
+{q:"Correct sentence?",o:["She has gone","She gone","She going","She go"],c:0},
+{q:"Fear water?",o:["Aquaphobia","Hydra","Waterism","Aqua"],c:0},
+{q:"Past begin?",o:["Began","Begun","Begin","Begined"],c:0},
+{q:"Synonym Rapid?",o:["Fast","Slow","Weak","Late"],c:0},
+{q:"Opposite Honest?",o:["Dishonest","Fair","Good","Kind"],c:0},
+{q:"Verb beauty?",o:["Beautify","Beauty","Beautiful","Beaute"],c:0},
+{q:"Antonym Ancient?",o:["Modern","Old","Past","Historic"],c:0},
+{q:"Meaning Idiom break ice?",o:["Start talk","Break ice","Stop","End"],c:0},
+{q:"Synonym Difficult?",o:["Hard","Easy","Soft","Light"],c:0},
+{q:"Opposite Ancient?",o:["Modern","Old","Past","Historic"],c:0},
+{q:"Article consonant?",o:["a","an","the","no"],c:0},
+{q:"Meaning Rapid?",o:["Fast","Slow","Late","Weak"],c:0},
+{q:"Past go?",o:["Went","Gone","Go","Going"],c:0},
+{q:"Synonym Smart?",o:["Intelligent","Dumb","Weak","Slow"],c:0}
+]);
 
-/* GK (25) */
-add("GK",Array.from({length:25},(_,i)=>({
-q:"GK Q "+(i+1),
-o:["A","B","C","D"],
-c:0,
-diff:"Hard"
-})));
+/* ========== REASONING 10 ========== */
+add("REASONING",[
+{q:"Odd one out?",o:["2","4","6","9"],c:3},
+{q:"Series 2,4,6?",o:["8","10","12","14"],c:0},
+{q:"Mirror image?",o:["Reversed","Same","Flip","None"],c:0},
+{q:"Coding?",o:["A=1","B=2","C=3","D=4"],c:0},
+{q:"Direction?",o:["Left","Right","Up","Down"],c:0},
+{q:"Blood relation?",o:["Father","Mother","Brother","All"],c:3},
+{q:"Analogy?",o:["A:B::C:D","Only A","Only B","None"],c:0},
+{q:"Pattern?",o:["ABAB","AAAA","BBBB","CCCC"],c:0},
+{q:"Puzzle?",o:["Solve","Skip","Guess","None"],c:0},
+{q:"Logic?",o:["True","False","Maybe","Unknown"],c:0}
+]);
 
 /* ================= SHUFFLE ================= */
-
-function shuffle(){
 quiz.forEach(q=>{
-let correct = q.o[q.c];
-q.o = q.o.sort(()=>Math.random()-0.5);
-q.c = q.o.indexOf(correct);
-});
+let correct=q.o[q.c];
+for(let i=q.o.length-1;i>0;i--){
+let j=Math.floor(Math.random()*i);
+[q.o[i],q.o[j]]=[q.o[j],q.o[i]];
 }
-shuffle();
+q.c=q.o.indexOf(correct);
+});
 
-/* ================= LOGIC ================= */
+/* ================= GAME LOGIC ================= */
 
-let i=0;
-let score=0;
-let timer;
-let time=15;
+let i=0,score=0;
 
 function load(){
 if(i>=quiz.length){
-document.body.innerHTML=`<h1>🎉 Done</h1><h2>Score: ${score}/125</h2>`;
+document.body.innerHTML=`<h1>Finished</h1><h2>Score: ${score}</h2>`;
 return;
 }
 
 let q=quiz[i];
-
-document.getElementById("section").innerText=q.sec+" | "+q.diff;
+document.getElementById("section").innerText=q.sec;
 document.getElementById("q").innerText=q.q;
 document.getElementById("score").innerText=score;
 
-let box=document.getElementById("a");
+let box=document.getElementById("options");
 box.innerHTML="";
 
 q.o.forEach((opt,idx)=>{
@@ -254,73 +257,26 @@ d.innerText=opt;
 d.onclick=()=>check(idx);
 box.appendChild(d);
 });
-
-startTimer();
-}
-
-function startTimer(){
-clearInterval(timer);
-time=15;
-
-timer=setInterval(()=>{
-time--;
-document.getElementById("timer").innerText="⏳ "+time;
-if(time<=0) next();
-},1000);
 }
 
 function check(ans){
 let q=quiz[i];
+let correctText=q.o[q.c];
 
-document.querySelectorAll(".option").forEach(o=>{
-o.style.pointerEvents="none";
-});
-
-let correctText = q.o[q.c];
+document.querySelectorAll(".option").forEach(o=>o.style.pointerEvents="none");
 
 if(ans===q.c){
 score++;
 document.getElementById("rightSound").play();
 }else{
+score--;
 document.getElementById("wrongSound").play();
 }
 
-document.getElementById("resultText").innerHTML =
-"Correct Answer: <b>"+correctText+"</b>";
+document.getElementById("score").innerText=score;
+document.getElementById("result").innerHTML="Correct: "+correctText;
 
-setTimeout(next,1200);
-}
-
-function next(){
-i++;
-load();
-}
-
-/* ================= PREVIEW ================= */
-
-function togglePreview(){
-let box=document.getElementById("previewBox");
-
-if(box.style.display==="block"){
-box.style.display="none";
-return;
-}
-
-box.innerHTML="";
-
-quiz.forEach((q,idx)=>{
-let d=document.createElement("div");
-d.className="previewItem";
-d.innerText=(idx+1)+". "+q.sec;
-d.onclick=()=>{
-i=idx;
-box.style.display="none";
-load();
-};
-box.appendChild(d);
-});
-
-box.style.display="block";
+setTimeout(()=>{i++;load();},900);
 }
 
 load();
