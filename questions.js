@@ -150,4 +150,4 @@ answers:["Earth","Mars","Venus","Saturn"],
 correct:"Mars"
 },
 
-{
+];
