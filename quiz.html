@@ -35,18 +35,11 @@ padding:12px;
 margin-top:10px;
 border-radius:10px;
 cursor:pointer;
-transition:0.2s;
 }
 
 .option:hover{
 background:#00e6ff;
 color:black;
-transform:scale(1.03);
-}
-
-#timer{
-margin:10px 0;
-color:#00e6ff;
 }
 </style>
 </head>
@@ -54,39 +47,49 @@ color:#00e6ff;
 <body>
 
 <div class="box">
-
 <h3 id="timer">⏳ 10</h3>
 <h2 id="question">Loading...</h2>
-
 <div id="answers"></div>
-
 </div>
-
-<!-- IMPORTANT: questions.js MUST be same folder -->
-<script src="questions.js"></script>
 
 <script>
 
-let quiz = [];
+let quiz = [
+{
+question:"भारत का राष्ट्रीय पशु?",
+answers:["Lion","Tiger","Elephant","Horse"],
+correct:"Tiger"
+},
+{
+question:"2 + 2 = ?",
+answers:["3","4","5","6"],
+correct:"4"
+},
+{
+question:"Sun rises in?",
+answers:["West","North","East","South"],
+correct:"East"
+},
+{
+question:"Water formula?",
+answers:["H2O","CO2","O2","NaCl"],
+correct:"H2O"
+},
+{
+question:"India capital?",
+answers:["Mumbai","Delhi","Kolkata","Chennai"],
+correct:"Delhi"
+}
+];
+
 let current = 0;
 let time = 10;
 let timer;
 
-// ---------- SAFE LOAD ----------
 window.onload = function(){
-
-if(typeof window.quiz === "undefined"){
-document.getElementById("question").innerText =
-"❌ questions.js not loaded!";
-return;
-}
-
-quiz = window.quiz;
-
 loadQuestion();
 }
 
-// ---------- LOAD QUESTION ----------
 function loadQuestion(){
 
 if(current >= quiz.length){
@@ -100,25 +103,24 @@ let q = quiz[current];
 
 document.getElementById("question").innerText = q.question;
 
-let ansBox = document.getElementById("answers");
-ansBox.innerHTML = "";
+let box = document.getElementById("answers");
+box.innerHTML = "";
 
 q.answers.forEach(a=>{
 let div = document.createElement("div");
 div.className = "option";
 div.innerText = a;
 
-div.onclick = ()=>{
-checkAnswer(a);
+div.onclick = function(){
+check(a);
 };
 
-ansBox.appendChild(div);
+box.appendChild(div);
 });
 
 startTimer();
 }
 
-// ---------- TIMER ----------
 function startTimer(){
 
 clearInterval(timer);
@@ -139,8 +141,7 @@ next();
 },1000);
 }
 
-// ---------- CHECK ----------
-function checkAnswer(ans){
+function check(ans){
 
 clearInterval(timer);
 
@@ -148,22 +149,21 @@ let correct = quiz[current].correct;
 
 let options = document.querySelectorAll(".option");
 
-options.forEach(opt=>{
-opt.style.pointerEvents = "none";
+options.forEach(o=>{
+o.style.pointerEvents = "none";
 
-if(opt.innerText === correct){
-opt.style.background = "green";
+if(o.innerText == correct){
+o.style.background = "green";
 }
 
-if(opt.innerText === ans && ans !== correct){
-opt.style.background = "red";
+if(o.innerText == ans && ans != correct){
+o.style.background = "red";
 }
 });
 
-setTimeout(next, 800);
+setTimeout(next,800);
 }
 
-// ---------- NEXT ----------
 function next(){
 current++;
 loadQuestion();
