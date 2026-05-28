@@ -3,135 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Agniveer Mock Test | Army Exam Preparation</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>QUIZ PRO VERSION</title>
 
 <style>
 body{
 margin:0;
-font-family:Poppins;
+font-family:Arial;
 background:#0b1220;
-color:white;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-}
-
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:18px;
-width:90%;
-max-width:450px;
-text-align:center;
-box-shadow:0 0 25px #00e6ff33;
-}
-
-h1{
-color:#00e6ff;
-font-size:22px;
-}
-
-.stats{
-display:flex;
-justify-content:space-between;
-margin-top:20px;
+color:white;
 }
 
 .box{
-background:#0f172a;
-padding:10px;
-border-radius:10px;
-width:30%;
+width:95%;
+max-width:750px;
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+position:relative;
 }
 
-button{
-margin-top:15px;
-width:100%;
+.top{
+display:flex;
+justify-content:space-between;
+color:#fbbf24;
+margin-bottom:10px;
+}
+
+.option{
+background:#111827;
 padding:12px;
-border:none;
-border-radius:10px;
-background:linear-gradient(90deg,#00e6ff,#8b5cf6);
-color:white;
-font-weight:bold;
+margin-top:10px;
+border-radius:8px;
 cursor:pointer;
 transition:0.2s;
 }
+.option:hover{background:#00e6ff;color:black;}
 
-button:hover{
-transform:scale(1.03);
+.correct{background:#22c55e !important;}
+.wrong{background:#ef4444 !important;}
+
+button{
+margin-top:10px;
+padding:8px 12px;
+border:none;
+border-radius:8px;
+background:#00e6ff;
+font-weight:bold;
+cursor:pointer;
 }
 
-.small{
-margin-top:10px;
+.previewBox{
+position:absolute;
+top:60px;
+left:0;
+right:0;
+background:#0f172a;
+max-height:300px;
+overflow:auto;
+display:none;
+padding:10px;
+border-radius:10px;
+z-index:999;
+}
+
+.previewItem{
+padding:6px;
+margin:5px 0;
+background:#111827;
+cursor:pointer;
+border-radius:6px;
 font-size:12px;
-opacity:0.7;
+}
+
+.pop{
+position:fixed;
+top:20px;
+right:20px;
+padding:10px 15px;
+border-radius:8px;
+animation:fade 0.8s;
+font-weight:bold;
+}
+
+@keyframes fade{
+0%{opacity:0;transform:translateY(-10px)}
+50%{opacity:1}
+100%{opacity:0;transform:translateY(-30px)}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="box">
 
-<h1>🪖 Agniveer Mock Test</h1>
-
-<p id="user">Welcome Soldier</p>
-
-<div class="stats">
-<div class="box">XP<br><span id="xp">0</span></div>
-<div class="box">Coins<br><span id="coins">0</span></div>
-<div class="box">Level<br><span id="lvl">1</span></div>
+<div class="top">
+<div id="section">START</div>
+<div id="timer">15</div>
+<div>Score: <span id="score">0</span></div>
 </div>
 
-<button onclick="start()">🚀 Start Mission</button>
-<button onclick="downloadCert()">🏅 Download Certificate</button>
+<h2 id="q"></h2>
+<div id="a"></div>
 
-<div class="small">Elite Indian Army Exam Preparation Platform</div>
+<button onclick="togglePreview()">Preview</button>
+
+<div class="previewBox" id="previewBox"></div>
 
 </div>
+
+<audio id="rightSound" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
+<audio id="wrongSound" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
 
 <script>
 
-let data = JSON.parse(localStorage.getItem("data") || "{}");
+let quiz=[];
 
-if(!data.xp){
-data = {xp:0, coins:0};
+/* ===== SAMPLE (replace with your full 110 questions) ===== */
+function add(sec,arr){
+arr.forEach(q=>quiz.push({sec,q:q.q,o:q.o,c:q.c}));
 }
 
-let level = Math.floor(data.xp / 100) + 1;
+/* KEEP YOUR FULL QUESTIONS HERE */
 
-document.getElementById("xp").innerText = data.xp;
-document.getElementById("coins").innerText = data.coins;
-document.getElementById("lvl").innerText = level;
+/* ===== SHUFFLE SAFE ===== */
+quiz.forEach(q=>{
+let correct=q.o[q.c];
+for(let i=q.o.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1));
+[q.o[i],q.o[j]]=[q.o[j],q.o[i]];
+}
+q.c=q.o.indexOf(correct);
+});
 
-document.getElementById("user").innerText =
-"Welcome " + (localStorage.getItem("player") || "Soldier");
+let i=0,score=0,time=15,timer;
 
-function start(){
-window.location.href = "quiz.html";
+/* ===== TIMER ===== */
+function startTimer(){
+clearInterval(timer);
+time=15;
+document.getElementById("timer").innerText=time;
+
+timer=setInterval(()=>{
+time--;
+document.getElementById("timer").innerText=time;
+
+if(time<=0){
+nextQ();
+}
+},1000);
 }
 
-function downloadCert(){
-
-let name = localStorage.getItem("player") || "Soldier";
-
-let text =
-"AGNEVEER MOCK TEST CERTIFICATE\n\n"+
-"Name: "+name+"\n"+
-"Level: "+level+"\n"+
-"XP: "+data.xp+"\n\n"+
-"Status: Qualified Candidate";
-
-let blob = new Blob([text], {type:"text/plain"});
-let a = document.createElement("a");
-a.href = URL.createObjectURL(blob);
-a.download = "Agniveer_Certificate.txt";
-a.click();
+/* ===== POPUP ===== */
+function pop(msg,color){
+let d=document.createElement("div");
+d.className="pop";
+d.style.background=color;
+d.innerText=msg;
+document.body.appendChild(d);
+setTimeout(()=>d.remove(),800);
 }
+
+/* ===== LOAD ===== */
+function load(){
+
+if(i>=quiz.length){
+document.body.innerHTML=`<h1>FINISHED</h1><h2>Score: ${score}</h2>`;
+return;
+}
+
+let q=quiz[i];
+document.getElementById("section").innerText=q.sec;
+document.getElementById("q").innerText=q.q;
+document.getElementById("score").innerText=score;
+
+let box=document.getElementById("a");
+box.innerHTML="";
+
+q.o.forEach((opt,idx)=>{
+let d=document.createElement("div");
+d.className="option";
+d.innerText=opt;
+d.onclick=()=>check(idx);
+box.appendChild(d);
+});
+
+startTimer();
+}
+
+/* ===== ANSWER ===== */
+function check(ans){
+
+let q=quiz[i];
+document.querySelectorAll(".option").forEach(o=>o.style.pointerEvents="none");
+
+if(ans===q.c){
+score++;
+document.getElementById("rightSound").play();
+pop("+1 ✔","green");
+}else{
+score--;
+document.getElementById("wrongSound").play();
+pop("-1 ✖","red");
+}
+
+document.getElementById("score").innerText=score;
+
+setTimeout(nextQ,700);
+}
+
+/* ===== NEXT ===== */
+function nextQ(){
+i++;
+load();
+}
+
+/* ===== PREVIEW ===== */
+function togglePreview(){
+let box=document.getElementById("previewBox");
+
+box.style.display = box.style.display==="block"?"none":"block";
+box.innerHTML="";
+
+quiz.forEach((q,idx)=>{
+let d=document.createElement("div");
+d.className="previewItem";
+d.innerText=(idx+1)+". "+q.sec;
+
+d.onclick=()=>{
+i=idx;
+box.style.display="none";
+load();
+};
+
+box.appendChild(d);
+});
+}
+
+load();
 
 </script>
 
