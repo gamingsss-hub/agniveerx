@@ -1,355 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>AgniveerX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgniveerX Login</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-background:#0f172a;
+margin:0;
+font-family:Poppins;
+background:radial-gradient(circle at top,#0f172a,#020617);
 color:white;
-overflow-x:hidden;
-}
-
-/* LOGIN */
-
-#login{
-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-background:
-linear-gradient(135deg,#00e6ff,#8b5cf6);
+height:100vh;
+overflow:hidden;
 }
 
-.login-box{
-background:#1e293b;
-padding:40px;
+/* glow background animation */
+body::before{
+content:"";
+position:absolute;
+width:300px;
+height:300px;
+background:#00e6ff;
+filter:blur(120px);
+top:10%;
+left:20%;
+opacity:0.2;
+animation:move 6s infinite alternate;
+}
+
+@keyframes move{
+from{transform:translateY(0px);}
+to{transform:translateY(50px);}
+}
+
+.box{
+position:relative;
+z-index:1;
+background:rgba(30,41,59,0.8);
+backdrop-filter:blur(10px);
+padding:35px;
 border-radius:20px;
-width:90%;
-max-width:400px;
 text-align:center;
-box-shadow:0 0 30px #00e6ff;
+width:90%;
+max-width:420px;
+box-shadow:0 0 25px rgba(0,230,255,0.3);
+border:1px solid rgba(0,230,255,0.2);
 }
 
-.login-box h1{
+h1{
+font-size:28px;
+margin-bottom:10px;
+color:#00e6ff;
+}
+
+p{
+font-size:13px;
+opacity:0.7;
 margin-bottom:20px;
 }
 
-.login-box input{
-width:100%;
-padding:15px;
+input{
+width:90%;
+padding:14px;
 border:none;
 border-radius:12px;
-margin-top:15px;
-font-size:16px;
 outline:none;
+font-size:16px;
+background:#0f172a;
+color:white;
+border:1px solid #1e293b;
 }
 
-.login-box button{
-margin-top:20px;
-padding:15px 30px;
+input:focus{
+border:1px solid #00e6ff;
+box-shadow:0 0 10px #00e6ff;
+}
+
+button{
+margin-top:18px;
+padding:14px 25px;
 border:none;
 border-radius:12px;
-background:#00e6ff;
-font-size:18px;
+background:linear-gradient(135deg,#00e6ff,#8b5cf6);
+color:white;
+font-size:16px;
 font-weight:bold;
 cursor:pointer;
 transition:0.3s;
+width:100%;
 }
 
-.login-box button:hover{
+button:hover{
 transform:scale(1.05);
+box-shadow:0 0 15px #00e6ff;
 }
 
-/* MAIN */
-
-#main{
-display:none;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px;
-background:#111827;
-position:sticky;
-top:0;
-z-index:100;
-box-shadow:0 0 15px rgba(0,230,255,0.3);
-}
-
-.logo{
-font-size:28px;
-font-weight:700;
+.info{
+margin-top:15px;
+font-size:13px;
 color:#00e6ff;
+opacity:0.9;
 }
 
-.user{
-font-size:18px;
+.badge{
+margin-top:10px;
+font-size:12px;
+color:#94a3b8;
 }
-
-.hero{
-padding:70px 20px;
-text-align:center;
-background:
-linear-gradient(135deg,#00e6ff,#8b5cf6);
-}
-
-.hero h1{
-font-size:45px;
-margin-bottom:15px;
-}
-
-.hero p{
-font-size:20px;
-}
-
-.start-btn{
-margin-top:25px;
-padding:15px 35px;
-border:none;
-border-radius:15px;
-background:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-}
-
-.start-btn:hover{
-transform:scale(1.08);
-}
-
-.section-title{
-padding:25px;
-font-size:28px;
-color:#00e6ff;
-}
-
-.subjects{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
-padding:20px;
-}
-
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:18px;
-text-align:center;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-10px)
-scale(1.05);
-
-box-shadow:0 0 25px #00e6ff;
-}
-
-.subject-icon{
-font-size:50px;
-margin-bottom:10px;
-}
-
-.footer{
-padding:25px;
-text-align:center;
-background:#111827;
-margin-top:30px;
-}
-
 </style>
-
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<div class="box">
 
-<div id="login">
+<h1>🪖 AgniveerX</h1>
+<p>India's Smart Army Mock Test Platform</p>
 
-<div class="login-box">
+<input id="name" placeholder="Enter Your Name">
 
-<h1>
-⚡ AgniveerX Login
-</h1>
+<button onclick="start()">🚀 Start Mission</button>
 
-<input
-type="text"
-id="name"
-placeholder="Enter Your Name"
->
-
-<button onclick="startApp()">
-🚀 Enter
-</button>
+<div class="info" id="info"></div>
+<div class="badge">⚡ Powered by AgniveerX System</div>
 
 </div>
 
-</div>
-
-<!-- MAIN WEBSITE -->
-
-<div id="main">
-
-<div class="topbar">
-
-<div class="logo">
-⚡ AgniveerX
-</div>
-
-<div class="user">
-
-👤
-<span id="username"></span>
-
-</div>
-
-</div>
-
-<div class="hero">
-
-<h1>
-🚀 Crack Agniveer Exam
-</h1>
-
-<p>
-Practice 500+ Important Questions
-</p>
-
-<button class="start-btn"
-onclick="location.href='quiz.html'">
-
-▶ Start Quiz
-
-</button>
-
-</div>
-
-<h2 class="section-title">
-📚 Subjects
-</h2>
-
-<div class="subjects">
-
-<div class="card">
-
-<div class="subject-icon">
-➗
-</div>
-
-<h2>Math</h2>
-
-</div>
-
-<div class="card">
-
-<div class="subject-icon">
-🧠
-</div>
-
-<h2>Reasoning</h2>
-
-</div>
-
-<div class="card">
-
-<div class="subject-icon">
-🌍
-</div>
-
-<h2>GK</h2>
-
-</div>
-
-<div class="card">
-
-<div class="subject-icon">
-🔬
-</div>
-
-<h2>Science</h2>
-
-</div>
-
-</div>
-
-<div class="footer">
-
-⚡ AgniveerX Quiz Platform
-
-</div>
-
-</div>
+<audio id="click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
 
 <script>
 
-function startApp(){
+function start(){
 
-let name =
-document.getElementById("name").value;
+document.getElementById("click").play();
 
-if(name==""){
+let name=document.getElementById("name").value;
 
-alert("Enter Your Name");
-
+if(!name){
+alert("Enter Name");
 return;
-
 }
 
-localStorage.setItem("player",name);
+let today=new Date().toDateString();
 
-document.getElementById("login")
-.style.display="none";
+let player=JSON.parse(localStorage.getItem("player")||"{}");
 
-document.getElementById("main")
-.style.display="block";
-
-document.getElementById("username")
-.innerText=name;
-
+// streak system
+if(player.name==name){
+player.streak=(player.lastLogin==today)?player.streak:(player.streak||0)+1;
+}else{
+player={
+name:name,
+xp:0,
+coins:0,
+level:1,
+streak:1
+};
 }
 
-window.onload=function(){
+player.lastLogin=today;
 
-let savedName=
-localStorage.getItem("player");
+localStorage.setItem("player",JSON.stringify(player));
 
-if(savedName){
+document.getElementById("info").innerHTML=
+"🔥 Daily Streak: "+player.streak+" days";
 
-document.getElementById("login")
-.style.display="none";
-
-document.getElementById("main")
-.style.display="block";
-
-document.getElementById("username")
-.innerText=savedName;
-
-}
-
+setTimeout(()=>{
+window.location.href="quiz.html";
+},900);
 }
 
 </script>
