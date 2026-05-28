@@ -161,6 +161,35 @@ document.getElementById("answers");
 const nextBtn =
 document.getElementById("nextBtn");
 
+function startTimer(){
+
+clearInterval(timer);
+
+timeLeft = 15;
+
+document.getElementById("timer")
+.innerText =
+"⏳ Time Left: " + timeLeft;
+
+timer = setInterval(()=>{
+
+timeLeft--;
+
+document.getElementById("timer")
+.innerText =
+"⏳ Time Left: " + timeLeft;
+
+if(timeLeft <= 0){
+
+clearInterval(timer);
+
+nextQuestion();
+
+}
+
+},1000);
+
+}  
 function loadQuestion(){
 
 nextBtn.style.display="none";
