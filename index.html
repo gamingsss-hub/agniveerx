@@ -24,118 +24,56 @@ font-family:'Poppins',sans-serif;
 body{
 background:#0f172a;
 color:white;
-overflow-x:hidden;
-}
-
-.topbar{
 display:flex;
-justify-content:space-between;
+justify-content:center;
 align-items:center;
-padding:18px;
+height:100vh;
+padding:20px;
+}
+
+.quiz-box{
+background:#1e293b;
+padding:30px;
+border-radius:20px;
+width:100%;
+max-width:500px;
+box-shadow:0 0 25px #00e6ff;
+}
+
+h2{
+margin-bottom:20px;
+}
+
+.option{
 background:#111827;
-position:sticky;
-top:0;
-z-index:100;
-box-shadow:0 0 15px rgba(0,230,255,0.3);
+padding:15px;
+margin-top:12px;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
 }
 
-.logo{
-font-size:28px;
-font-weight:700;
-color:#00e6ff;
-text-shadow:0 0 10px #00e6ff;
+.option:hover{
+background:#00e6ff;
+color:black;
+transform:scale(1.03);
 }
 
-.menu button{
-padding:10px 18px;
+#nextBtn{
+margin-top:20px;
+padding:12px 20px;
 border:none;
 border-radius:12px;
 background:#00e6ff;
 font-weight:bold;
 cursor:pointer;
-margin-left:8px;
-cursor:pointer;
+display:none;
 }
 
-.hero{
-padding:70px 20px;
-text-align:center;
-background:
-linear-gradient(135deg,#00e6ff,#8b5cf6);
-animation: glow 3s infinite alternate;
-}
-
-.hero h1{
-font-size:48px;
-margin-bottom:15px;
-}
-
-.hero p{
+#score{
+margin-top:20px;
 font-size:20px;
-}
-
-.start-btn{
-margin-top:25px;
-padding:15px 35px;
-border:none;
-border-radius:15px;
-background:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-}
-
-.start-btn:hover{
-transform:scale(1.08);
-}
-
-@keyframes glow{
-
-from{
-box-shadow:0 0 10px #00e6ff;
-}
-
-to{
-box-shadow:0 0 30px #8b5cf6;
-}
-
-}
-
-.section-title{
-padding:25px;
-font-size:28px;
-color:#00e6ff;
-}
-
-.subjects{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
-padding:20px;
-}
-
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:18px;
-text-align:center;
-cursor:pointer;
-transition:0.3s;
-border:1px solid rgba(255,255,255,0.1);
-}
-
-.card:hover{
-transform:translateY(-10px)
-scale(1.05);
-
-box-shadow:0 0 25px #00e6ff;
-}
-
-.subject-icon{
-font-size:50px;
-margin-bottom:10px;
+color:#22c55e;
 }
 
 </style>
@@ -143,129 +81,155 @@ margin-bottom:10px;
 </head>
 
 <body>
-<!-- TOPBAR -->
 
-<div class="topbar">
+<div class="quiz-box">
 
-<div class="logo">
-⚡ AgniveerX
-</div>
-
-<div class="menu">
-
-<button>
-🏠 Home
-</button>
-
-<button>
-📚 Subjects
-</button>
-
-<button>
-🏆 Leaderboard
-</button>
-
-</div>
-
-</div>
-
-<!-- HERO SECTION -->
-
-<div class="hero">
-
-<h1>
-🚀 Crack Agniveer Exam
-</h1>
-
-<p>
-Practice 500+ Important Questions
-</p>
-
-<button class="start-btn">
-▶ Start Quiz
-</button>
-
-</div>
-
-<!-- SUBJECTS -->
-
-<h2 class="section-title">
-📚 Subjects
+<h2 id="question">
+Question Loading...
 </h2>
 
-<div class="subjects">
+<div id="answers"></div>
 
-<div class="card">
+<button id="nextBtn"
+onclick="nextQuestion()">
+Next Question
+</button>
 
-<div class="subject-icon">
-➗
-</div>
-
-<h2>Math</h2>
-
-<p>
-Practice Aptitude Questions
-</p>
+<div id="score"></div>
 
 </div>
 
-<div class="card">
+<script>
 
-<div class="subject-icon">
-🧠
-</div>
+const quiz = [
 
-<h2>Reasoning</h2>
+{
+question:"भारत की राजधानी क्या है?",
+answers:["Mumbai","Delhi","Kolkata","Chennai"],
+correct:"Delhi"
+},
 
-<p>
-Boost Logical Thinking
-</p>
+{
+question:"2 + 2 = ?",
+answers:["3","4","5","6"],
+correct:"4"
+},
 
-</div>
+{
+question:"Largest planet?",
+answers:["Earth","Mars","Jupiter","Venus"],
+correct:"Jupiter"
+}
 
-<div class="card">
+];
 
-<div class="subject-icon">
-🌍
-</div>
+let current = 0;
+let score = 0;
 
-<h2>General Knowledge</h2>
+const question =
+document.getElementById("question");
 
-<p>
-Important GK Questions
-</p>
+const answers =
+document.getElementById("answers");
 
-</div>
+const nextBtn =
+document.getElementById("nextBtn");
 
-<div class="card">
+function loadQuestion(){
 
-<div class="subject-icon">
-🔬
-</div>
+nextBtn.style.display="none";
 
-<h2>Science</h2>
+let q = quiz[current];
 
-<p>
-Physics, Chemistry & Biology
-</p>
+question.innerText = q.question;
 
-</div>
+answers.innerHTML = "";
 
-<div class="card">
+q.answers.forEach(answer=>{
 
-<div class="subject-icon">
-📖
-</div>
+let div =
+document.createElement("div");
 
-<h2>English</h2>
+div.classList.add("option");
 
-<p>
-Grammar & Vocabulary
-</p>
+div.innerText = answer;
 
-</div>
+div.onclick = ()=>checkAnswer(answer);
 
-</div>
+answers.appendChild(div);
+
+});
+
+}
+
+function checkAnswer(answer){
+
+let correct = quiz[current].correct;
+
+let options =
+document.querySelectorAll(".option");
+
+options.forEach(option=>{
+
+option.style.pointerEvents="none";
+
+if(option.innerText === correct){
+
+option.style.background="#22c55e";
+
+}
+
+if(
+option.innerText === answer
+&&
+answer !== correct
+){
+
+option.style.background="red";
+
+}
+
+});
+
+if(answer === correct){
+
+score++;
+
+}
+
+nextBtn.style.display="block";
+
+}
+
+function nextQuestion(){
+
+current++;
+
+if(current < quiz.length){
+
+loadQuestion();
+
+}
+else{
+
+question.innerText =
+"🎉 Quiz Finished!";
+
+answers.innerHTML = "";
+
+nextBtn.style.display="none";
+
+document.getElementById("score")
+.innerText =
+"Your Score: " + score;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
 
 </body>
 </html>
