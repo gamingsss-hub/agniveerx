@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgniveerX</title>
+<title>AgniveerX Level 3</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -11,7 +11,7 @@
 body{
 margin:0;
 font-family:Poppins;
-background:#0f172a;
+background:#0b1220;
 color:white;
 display:flex;
 justify-content:center;
@@ -19,74 +19,95 @@ align-items:center;
 height:100vh;
 }
 
-.box{
+.card{
 background:#1e293b;
-padding:30px;
-border-radius:15px;
-text-align:center;
+padding:25px;
+border-radius:18px;
 width:90%;
-max-width:400px;
-box-shadow:0 0 15px #00e6ff;
+max-width:450px;
+text-align:center;
+box-shadow:0 0 25px #00e6ff33;
 }
 
 h1{
 color:#00e6ff;
-margin-bottom:10px;
 }
 
-input{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
+.stats{
+display:flex;
+justify-content:space-between;
+margin-top:20px;
+}
+
+.box{
+background:#0f172a;
+padding:10px;
 border-radius:10px;
-outline:none;
-font-size:16px;
+width:30%;
 }
 
 button{
-margin-top:15px;
+margin-top:20px;
 width:100%;
 padding:12px;
 border:none;
 border-radius:10px;
-background:#00e6ff;
+background:linear-gradient(90deg,#00e6ff,#8b5cf6);
+color:white;
 font-weight:bold;
 cursor:pointer;
-font-size:16px;
-}
-
-button:hover{
-opacity:0.9;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h1>🪖 AgniveerX</h1>
-<p>Mock Test Platform</p>
+<div class="card">
+<h1>🪖 AgniveerX LEVEL 3</h1>
 
-<input id="name" placeholder="Enter Your Name">
+<p id="user">Welcome Soldier</p>
 
-<button onclick="start()">Start Test</button>
+<div class="stats">
+<div class="box">XP<br><span id="xp">0</span></div>
+<div class="box">Coins<br><span id="coins">0</span></div>
+<div class="box">Rank<br><span id="rank">Rookie</span></div>
+</div>
+
+<button onclick="start()">🚀 Start Mission</button>
 </div>
 
 <script>
-function start(){
 
-let name=document.getElementById("name").value;
+let player = localStorage.getItem("player") || "Guest";
 
-if(name.trim()==""){
-alert("Enter Name");
-return;
+document.getElementById("user").innerText="Welcome "+player;
+
+// load data
+let data = JSON.parse(localStorage.getItem("data")||"{}");
+
+if(!data.xp){
+data={xp:0,coins:0,rank:"Rookie"};
 }
 
-localStorage.setItem("player",name);
+function getRank(xp){
+if(xp>=200) return "Captain";
+if(xp>=100) return "Soldier";
+if(xp>=50) return "Cadet";
+return "Rookie";
+}
 
+data.rank=getRank(data.xp);
+
+localStorage.setItem("data",JSON.stringify(data));
+
+document.getElementById("xp").innerText=data.xp;
+document.getElementById("coins").innerText=data.coins;
+document.getElementById("rank").innerText=data.rank;
+
+function start(){
 window.location.href="quiz.html";
 }
+
 </script>
 
 </body>
