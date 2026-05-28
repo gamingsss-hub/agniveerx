@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QUIZ PRO VERSION</title>
+<title>AgniveerX Home</title>
 
 <style>
 body{
@@ -17,236 +17,43 @@ height:100vh;
 color:white;
 }
 
-.box{
-width:95%;
-max-width:750px;
+.card{
 background:#1e293b;
-padding:20px;
+padding:25px;
 border-radius:15px;
 text-align:center;
-position:relative;
+width:90%;
+max-width:500px;
 }
-
-.top{
-display:flex;
-justify-content:space-between;
-color:#fbbf24;
-margin-bottom:10px;
-}
-
-.option{
-background:#111827;
-padding:12px;
-margin-top:10px;
-border-radius:8px;
-cursor:pointer;
-transition:0.2s;
-}
-.option:hover{background:#00e6ff;color:black;}
-
-.correct{background:#22c55e !important;}
-.wrong{background:#ef4444 !important;}
 
 button{
-margin-top:10px;
-padding:8px 12px;
+margin-top:15px;
+padding:10px 20px;
 border:none;
 border-radius:8px;
 background:#00e6ff;
 font-weight:bold;
 cursor:pointer;
+font-size:16px;
 }
-
-.previewBox{
-position:absolute;
-top:60px;
-left:0;
-right:0;
-background:#0f172a;
-max-height:300px;
-overflow:auto;
-display:none;
-padding:10px;
-border-radius:10px;
-z-index:999;
-}
-
-.previewItem{
-padding:6px;
-margin:5px 0;
-background:#111827;
-cursor:pointer;
-border-radius:6px;
-font-size:12px;
-}
-
-.pop{
-position:fixed;
-top:20px;
-right:20px;
-padding:10px 15px;
-border-radius:8px;
-animation:fade 0.8s;
-font-weight:bold;
-}
-
-@keyframes fade{
-0%{opacity:0;transform:translateY(-10px)}
-50%{opacity:1}
-100%{opacity:0;transform:translateY(-30px)}
-}
+button:hover{background:#22c55e;color:black;}
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="card">
+<h1>🚀 AgniveerX Quiz</h1>
+<p>Physics • Math • GK • English • Reasoning</p>
+<p>⚡ 110 Questions • Timer • Negative Marking</p>
 
-<div class="top">
-<div id="section">START</div>
-<div id="timer">15</div>
-<div>Score: <span id="score">0</span></div>
+<button onclick="startQuiz()">Start Quiz</button>
 </div>
-
-<h2 id="q"></h2>
-<div id="a"></div>
-
-<button onclick="togglePreview()">Preview</button>
-
-<div class="previewBox" id="previewBox"></div>
-
-</div>
-
-<audio id="rightSound" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
-<audio id="wrongSound" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
 
 <script>
-
-let quiz=[];
-
-/* ===== SAMPLE (replace with your full 110 questions) ===== */
-function add(sec,arr){
-arr.forEach(q=>quiz.push({sec,q:q.q,o:q.o,c:q.c}));
+function startQuiz(){
+window.location.href="quiz.html";
 }
-
-/* KEEP YOUR FULL QUESTIONS HERE */
-
-/* ===== SHUFFLE SAFE ===== */
-quiz.forEach(q=>{
-let correct=q.o[q.c];
-for(let i=q.o.length-1;i>0;i--){
-let j=Math.floor(Math.random()*(i+1));
-[q.o[i],q.o[j]]=[q.o[j],q.o[i]];
-}
-q.c=q.o.indexOf(correct);
-});
-
-let i=0,score=0,time=15,timer;
-
-/* ===== TIMER ===== */
-function startTimer(){
-clearInterval(timer);
-time=15;
-document.getElementById("timer").innerText=time;
-
-timer=setInterval(()=>{
-time--;
-document.getElementById("timer").innerText=time;
-
-if(time<=0){
-nextQ();
-}
-},1000);
-}
-
-/* ===== POPUP ===== */
-function pop(msg,color){
-let d=document.createElement("div");
-d.className="pop";
-d.style.background=color;
-d.innerText=msg;
-document.body.appendChild(d);
-setTimeout(()=>d.remove(),800);
-}
-
-/* ===== LOAD ===== */
-function load(){
-
-if(i>=quiz.length){
-document.body.innerHTML=`<h1>FINISHED</h1><h2>Score: ${score}</h2>`;
-return;
-}
-
-let q=quiz[i];
-document.getElementById("section").innerText=q.sec;
-document.getElementById("q").innerText=q.q;
-document.getElementById("score").innerText=score;
-
-let box=document.getElementById("a");
-box.innerHTML="";
-
-q.o.forEach((opt,idx)=>{
-let d=document.createElement("div");
-d.className="option";
-d.innerText=opt;
-d.onclick=()=>check(idx);
-box.appendChild(d);
-});
-
-startTimer();
-}
-
-/* ===== ANSWER ===== */
-function check(ans){
-
-let q=quiz[i];
-document.querySelectorAll(".option").forEach(o=>o.style.pointerEvents="none");
-
-if(ans===q.c){
-score++;
-document.getElementById("rightSound").play();
-pop("+1 ✔","green");
-}else{
-score--;
-document.getElementById("wrongSound").play();
-pop("-1 ✖","red");
-}
-
-document.getElementById("score").innerText=score;
-
-setTimeout(nextQ,700);
-}
-
-/* ===== NEXT ===== */
-function nextQ(){
-i++;
-load();
-}
-
-/* ===== PREVIEW ===== */
-function togglePreview(){
-let box=document.getElementById("previewBox");
-
-box.style.display = box.style.display==="block"?"none":"block";
-box.innerHTML="";
-
-quiz.forEach((q,idx)=>{
-let d=document.createElement("div");
-d.className="previewItem";
-d.innerText=(idx+1)+". "+q.sec;
-
-d.onclick=()=>{
-i=idx;
-box.style.display="none";
-load();
-};
-
-box.appendChild(d);
-});
-}
-
-load();
-
 </script>
 
 </body>
