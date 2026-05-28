@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Army Mock Test</title>
+<title>AgniveerX Full Mock Test</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
@@ -24,7 +24,7 @@ background:#1e293b;
 padding:25px;
 border-radius:15px;
 width:90%;
-max-width:500px;
+max-width:600px;
 text-align:center;
 }
 
@@ -41,9 +41,9 @@ background:#00e6ff;
 color:black;
 }
 
-#result{
-margin-top:15px;
-color:#22c55e;
+#timer{
+color:#00e6ff;
+margin-bottom:10px;
 }
 </style>
 </head>
@@ -51,28 +51,130 @@ color:#22c55e;
 <body>
 
 <div class="box">
+<h3 id="timer">⏳ 15</h3>
 <h2 id="q">Loading...</h2>
 <div id="a"></div>
-<div id="result"></div>
 </div>
 
 <script>
 
-let quiz=[
-{q:"2+2?",a:["3","4","5"],c:"4"},
-{q:"India capital?",a:["Delhi","Mumbai","Kolkata"],c:"Delhi"},
-{q:"Water formula?",a:["H2O","CO2","O2"],c:"H2O"},
-{q:"Sun rises in?",a:["East","West","North"],c:"East"},
-{q:"5×5?",a:["20","25","30"],c:"25"}
+let quiz = [
+
+/* ---------------- PHYSICS (25) ---------------- */
+{q:"Speed of light?",a:["3×10^8","3×10^6","5×10^8","1×10^7"],c:"3×10^8"},
+{q:"SI unit of force?",a:["Newton","Joule","Watt","Pascal"],c:"Newton"},
+{q:"SI unit of energy?",a:["Joule","Newton","Watt","Volt"],c:"Joule"},
+{q:"Ohm's law?",a:["V=IR","F=ma","E=mc²","P=VI"],c:"V=IR"},
+{q:"Gravity value?",a:["9.8","10","8","12"],c:"9.8"},
+{q:"Sound travels fastest in?",a:["Solid","Liquid","Gas","Vacuum"],c:"Solid"},
+{q:"Mirror in car?",a:["Convex","Concave","Plane","None"],c:"Convex"},
+{q:"Unit of power?",a:["Watt","Joule","Newton","Volt"],c:"Watt"},
+{q:"SI unit of current?",a:["Ampere","Volt","Ohm","Watt"],c:"Ampere"},
+{q:"Boiling point of water?",a:["100°C","90°C","120°C","80°C"],c:"100°C"},
+{q:"Unit of frequency?",a:["Hertz","Newton","Joule","Watt"],c:"Hertz"},
+{q:"Light travels in?",a:["Straight line","Curve","Circle","Wave only"],c:"Straight line"},
+{q:"Work formula?",a:["F×D","M×V","P×T","V×I"],c:"F×D"},
+{q:"Lens for myopia?",a:["Concave","Convex","Plane","None"],c:"Concave"},
+{q:"Electric resistance unit?",a:["Ohm","Volt","Ampere","Watt"],c:"Ohm"},
+{q:"Energy stored in spring?",a:["Potential","Kinetic","Heat","Sound"],c:"Potential"},
+{q:"SI unit of pressure?",a:["Pascal","Newton","Joule","Watt"],c:"Pascal"},
+{q:"Vector quantity?",a:["Force","Mass","Time","Temp"],c:"Force"},
+{q:"Light year is?",a:["Distance","Time","Speed","Energy"],c:"Distance"},
+{q:"Electromagnet uses?",a:["Electric current","Heat","Light","Sound"],c:"Electric current"},
+{q:"Image in plane mirror?",a:["Virtual","Real","Blur","None"],c:"Virtual"},
+{q:"Speed formula?",a:["D/T","T/D","F/M","P/V"],c:"D/T"},
+{q:"Free fall acceleration?",a:["9.8","10","5","15"],c:"9.8"},
+{q:"Unit of voltage?",a:["Volt","Ampere","Ohm","Watt"],c:"Volt"},
+{q:"Newton discovered?",a:["Gravity","Light","Electricity","Magnet"],c:"Gravity"},
+
+/* ---------------- HISTORY/GK (25) ---------------- */
+{q:"India capital?",a:["Delhi","Mumbai","Kolkata","Chennai"],c:"Delhi"},
+{q:"National animal?",a:["Tiger","Lion","Elephant","Horse"],c:"Tiger"},
+{q:"National bird?",a:["Peacock","Crow","Parrot","Sparrow"],c:"Peacock"},
+{q:"Independence year?",a:["1947","1950","1949","1952"],c:"1947"},
+{q:"Constitution year?",a:["1950","1947","1949","1952"],c:"1950"},
+{q:"Father of Nation?",a:["Gandhi","Nehru","Patel","Bose"],c:"Gandhi"},
+{q:"Largest state?",a:["Rajasthan","UP","MP","Bihar"],c:"Rajasthan"},
+{q:"Currency?",a:["Rupee","Dollar","Euro","Yen"],c:"Rupee"},
+{q:"Army day?",a:["15 Jan","26 Jan","15 Aug","2 Oct"],c:"15 Jan"},
+{q:"PM residence?",a:["Delhi","Mumbai","Kolkata","Chennai"],c:"Delhi"},
+{q:"First PM?",a:["Nehru","Gandhi","Patel","Bose"],c:"Nehru"},
+{q:"Taj Mahal city?",a:["Agra","Delhi","Jaipur","Lucknow"],c:"Agra"},
+{q:"National game?",a:["Hockey","Cricket","Football","Kabaddi"],c:"Hockey"},
+{q:"Lok Sabha term?",a:["5 years","6 years","4 years","3 years"],c:"5 years"},
+{q:"President India?",a:["Head of State","PM","CM","Governor"],c:"Head of State"},
+{q:"Red Fort built by?",a:["Mughals","British","Maratha","Sikh"],c:"Mughals"},
+{q:"Ganga origin?",a:["Gangotri","Yamunotri","Kedarnath","Badrinath"],c:"Gangotri"},
+{q:"National flower?",a:["Lotus","Rose","Lily","Sunflower"],c:"Lotus"},
+{q:"Capital of UP?",a:["Lucknow","Delhi","Agra","Kanpur"],c:"Lucknow"},
+{q:"IT hub?",a:["Bangalore","Delhi","Mumbai","Pune"],c:"Bangalore"},
+{q:"National anthem writer?",a:["Tagore","Premchand","Nehru","Gandhi"],c:"Tagore"},
+{q:"Satyamev Jayate meaning?",a:["Truth alone wins","Power","War","Peace"],c:"Truth alone wins"},
+{q:"UN head office?",a:["New York","Delhi","London","Paris"],c:"New York"},
+{q:"Ashoka symbol?",a:["Lion","Tiger","Horse","Elephant"],c:"Lion"},
+{q:"National flag colours?",a:["3","2","4","5"],c:"3"},
+
+/* ---------------- MATHS (25) ---------------- */
+{q:"25×4?",a:["100","90","110","120"],c:"100"},
+{q:"√144?",a:["12","10","11","13"],c:"12"},
+{q:"15²?",a:["225","200","250","275"],c:"225"},
+{q:"100/5?",a:["20","15","25","30"],c:"20"},
+{q:"2³?",a:["8","6","4","9"],c:"8"},
+{q:"LCM 4,6?",a:["12","10","8","14"],c:"12"},
+{q:"HCF 12,18?",a:["6","4","8","10"],c:"6"},
+{q:"10% of 200?",a:["20","10","30","40"],c:"20"},
+{q:"9×9?",a:["81","72","99","89"],c:"81"},
+{q:"50/2?",a:["25","20","30","40"],c:"25"},
+{q:"100-45?",a:["55","50","60","65"],c:"55"},
+{q:"5²?",a:["25","20","30","15"],c:"25"},
+{q:"3²?",a:["9","6","12","8"],c:"9"},
+{q:"7×7?",a:["49","42","56","63"],c:"49"},
+{q:"8×8?",a:["64","60","72","68"],c:"64"},
+{q:"√81?",a:["9","8","7","6"],c:"9"},
+{q:"20×5?",a:["100","90","110","120"],c:"100"},
+{q:"30/3?",a:["10","15","20","5"],c:"10"},
+{q:"40+60?",a:["100","90","110","120"],c:"100"},
+{q:"12×2?",a:["24","22","26","28"],c:"24"},
+{q:"15+15?",a:["30","25","35","40"],c:"30"},
+{q:"1000/10?",a:["100","90","110","120"],c:"100"},
+{q:"11×11?",a:["121","111","131","141"],c:"121"},
+{q:"6×6?",a:["36","30","42","48"],c:"36"},
+{q:"14+6?",a:["20","18","22","24"],c:"20"},
+
+/* ---------------- ENGLISH (10) ---------------- */
+{q:"Synonym Happy?",a:["Joyful","Sad","Angry","Weak"],c:"Joyful"},
+{q:"Antonym Hot?",a:["Cold","Warm","Fire","Heat"],c:"Cold"},
+{q:"Go past tense?",a:["Went","Go","Gone","Going"],c:"Went"},
+{q:"Article before vowel?",a:["an","a","the","no"],c:"an"},
+{q:"Correct spelling?",a:["Beautiful","Beautifull","Bautiful","Beautifal"],c:"Beautiful"},
+{q:"Opposite of Big?",a:["Small","Large","Huge","Wide"],c:"Small"},
+{q:"He ___ playing?",a:["is","are","am","be"],c:"is"},
+{q:"Plural of Child?",a:["Children","Childs","Childes","Child"],c:"Children"},
+{q:"Verb of Beauty?",a:["Beautify","Beautiful","Beauty","Beaute"],c:"Beautify"},
+{q:"Capital letter use in?",a:["Name","Verb","Adverb","Preposition"],c:"Name"},
+
+/* ---------------- REASONING (10) ---------------- */
+{q:"2,4,6,?",a:["8","7","9","10"],c:"8"},
+{q:"Odd one?",a:["Apple","Banana","Carrot","Mango"],c:"Carrot"},
+{q:"A,C,E,?",a:["G","F","H","I"],c:"G"},
+{q:"CAT → DBU, DOG → ?",a:["EPH","EPI","FQJ","EQH"],c:"EPH"},
+{q:"Mirror of 3?",a:["Ɛ","3","E","M"],c:"Ɛ"},
+{q:"Next: 10,20,30?",a:["40","35","50","60"],c:"40"},
+{q:"Find missing: 5,10,?,20",a:["15","12","18","14"],c:"15"},
+{q:"Direction opposite of North?",a:["South","East","West","North-East"],c:"South"},
+{q:"Coding: ABC=123 then C= ?",a:["3","2","1","4"],c:"3"},
+{q:"Odd even check: 8?",a:["Even","Odd","Prime","Zero"],c:"Even"}
+
 ];
 
 let i=0;
-let score=0;
+let timer;
+let time=15;
 
 function load(){
 
 if(i>=quiz.length){
-finish();
+document.body.innerHTML="<h1>🎉 Exam Finished</h1>";
 return;
 }
 
@@ -91,38 +193,31 @@ box.appendChild(d);
 
 });
 
+startTimer();
 }
 
-function check(ans){
-if(ans==quiz[i].c){
-score++;
-}
+function startTimer(){
+
+clearInterval(timer);
+time=15;
+
+timer=setInterval(()=>{
+
+time--;
+document.getElementById("timer").innerText="⏳ "+time;
+
+if(time<=0){
 i++;
 load();
 }
 
-function finish(){
-
-let data=JSON.parse(localStorage.getItem("data")||"{}");
-
-if(!data.xp){
-data={xp:0,coins:0};
+},1000);
 }
 
-data.xp += score*25;
-data.coins += score*10;
+function check(ans){
 
-localStorage.setItem("data",JSON.stringify(data));
-
-document.getElementById("q").innerText="🎉 Mission Complete";
-document.getElementById("a").innerHTML="";
-document.getElementById("result").innerHTML=
-"Score: "+score+" | XP Added: "+(score*25);
-
-setTimeout(()=>{
-window.location.href="index.html";
-},2000);
-
+i++;
+load();
 }
 
 load();
