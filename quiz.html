@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgniveerX Pro</title>
+<title>AgniveerX Quiz</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -44,9 +44,9 @@ color:black;
 transform:scale(1.03);
 }
 
-.badge{
+#timer{
+margin:10px 0;
 color:#00e6ff;
-margin-bottom:10px;
 }
 </style>
 </head>
@@ -55,141 +55,118 @@ margin-bottom:10px;
 
 <div class="box">
 
-<div class="badge" id="badge">Rank: C</div>
-
+<h3 id="timer">⏳ 10</h3>
 <h2 id="question">Loading...</h2>
-<div id="answers"></div>
-<h3 id="timer">10</h3>
 
-<div id="result"></div>
+<div id="answers"></div>
 
 </div>
 
-<audio id="right" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
-<audio id="wrong" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
-
+<!-- IMPORTANT: questions.js MUST be same folder -->
 <script src="questions.js"></script>
 
 <script>
 
-let quiz=[];
-let current=0;
-let time=10;
+let quiz = [];
+let current = 0;
+let time = 10;
 let timer;
 
-let player=JSON.parse(localStorage.getItem("player"));
+// ---------- SAFE LOAD ----------
+window.onload = function(){
 
-function updateRank(){
-
-let r="C";
-if(player.xp>100) r="B";
-if(player.xp>200) r="A";
-if(player.xp>350) r="S";
-
-document.getElementById("badge").innerText="Rank: "+r;
+if(typeof window.quiz === "undefined"){
+document.getElementById("question").innerText =
+"❌ questions.js not loaded!";
+return;
 }
 
-window.onload=function(){
-quiz=window.quiz;
-updateRank();
-load();
+quiz = window.quiz;
+
+loadQuestion();
 }
 
-function load(){
+// ---------- LOAD QUESTION ----------
+function loadQuestion(){
 
-let q=quiz[current];
+if(current >= quiz.length){
+document.getElementById("question").innerText = "🎉 Quiz Finished!";
+document.getElementById("answers").innerHTML = "";
+document.getElementById("timer").innerText = "";
+return;
+}
 
-document.getElementById("question").innerText=q.question;
+let q = quiz[current];
 
-let ans=document.getElementById("answers");
-ans.innerHTML="";
+document.getElementById("question").innerText = q.question;
+
+let ansBox = document.getElementById("answers");
+ansBox.innerHTML = "";
 
 q.answers.forEach(a=>{
-let div=document.createElement("div");
-div.className="option";
-div.innerText=a;
-div.onclick=()=>check(a);
-ans.appendChild(div);
+let div = document.createElement("div");
+div.className = "option";
+div.innerText = a;
+
+div.onclick = ()=>{
+checkAnswer(a);
+};
+
+ansBox.appendChild(div);
 });
 
 startTimer();
 }
 
+// ---------- TIMER ----------
 function startTimer(){
 
 clearInterval(timer);
-time=10;
+time = 10;
 
-timer=setInterval(()=>{
+document.getElementById("timer").innerText = "⏳ " + time;
+
+timer = setInterval(()=>{
+
 time--;
-document.getElementById("timer").innerText=time;
-if(time<=0) next();
+document.getElementById("timer").innerText = "⏳ " + time;
+
+if(time <= 0){
+clearInterval(timer);
+next();
+}
+
 },1000);
 }
 
-function check(a){
+// ---------- CHECK ----------
+function checkAnswer(ans){
 
 clearInterval(timer);
 
-let correct=quiz[current].correct;
+let correct = quiz[current].correct;
 
-if(a==correct){
-player.xp+=20;
-player.coins+=10;
-document.getElementById("right").play();
-}else{
-player.xp+=2;
-document.getElementById("wrong").play();
+let options = document.querySelectorAll(".option");
+
+options.forEach(opt=>{
+opt.style.pointerEvents = "none";
+
+if(opt.innerText === correct){
+opt.style.background = "green";
 }
 
-player.level=Math.floor(player.xp/50)+1;
-
-localStorage.setItem("player",JSON.stringify(player));
-
-updateRank();
-
-setTimeout(next,400);
+if(opt.innerText === ans && ans !== correct){
+opt.style.background = "red";
 }
-
-function next(){
-
-current++;
-
-if(current<quiz.length){
-load();
-}
-else{
-
-document.getElementById("question").innerText="🎉 Mission Complete";
-
-let percent=Math.floor((player.xp/(quiz.length*20))*100);
-
-let grade="C";
-if(percent>90) grade="S";
-else if(percent>70) grade="A";
-else if(percent>50) grade="B";
-
-document.getElementById("answers").innerHTML=
-"🏆 Score Grade: "+grade+
-"<br>📊 XP: "+player.xp+
-"<br>🪙 Coins: "+player.coins+
-"<br>📈 Accuracy: "+percent+"%";
-
-saveBoard();
-}
-}
-
-function saveBoard(){
-
-let board=JSON.parse(localStorage.getItem("board")||"[]");
-
-board.push({
-name:player.name,
-xp:player.xp,
-grade:document.getElementById("badge").innerText
 });
 
-localStorage.setItem("board",JSON.stringify(board));
+setTimeout(next, 800);
+}
+
+// ---------- NEXT ----------
+function next(){
+current++;
+loadQuestion();
 }
 
 </script>
