@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgniveerX Level 4</title>
+
+<title>Agniveer Mock Test | Army Exam Preparation</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -29,7 +30,10 @@ text-align:center;
 box-shadow:0 0 25px #00e6ff33;
 }
 
-h1{color:#00e6ff;}
+h1{
+color:#00e6ff;
+font-size:22px;
+}
 
 .stats{
 display:flex;
@@ -54,6 +58,11 @@ background:linear-gradient(90deg,#00e6ff,#8b5cf6);
 color:white;
 font-weight:bold;
 cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+transform:scale(1.03);
 }
 
 .small{
@@ -68,7 +77,7 @@ opacity:0.7;
 
 <div class="card">
 
-<h1>🪖 AgniveerX LEVEL 4</h1>
+<h1>🪖 Agniveer Mock Test</h1>
 
 <p id="user">Welcome Soldier</p>
 
@@ -81,46 +90,46 @@ opacity:0.7;
 <button onclick="start()">🚀 Start Mission</button>
 <button onclick="downloadCert()">🏅 Download Certificate</button>
 
-<div class="small">Elite Army Training System</div>
+<div class="small">Elite Indian Army Exam Preparation Platform</div>
 
 </div>
 
 <script>
 
-let data = JSON.parse(localStorage.getItem("data")||"{}");
+let data = JSON.parse(localStorage.getItem("data") || "{}");
 
 if(!data.xp){
-data={xp:0,coins:0};
+data = {xp:0, coins:0};
 }
 
-let level = Math.floor(data.xp/100)+1;
+let level = Math.floor(data.xp / 100) + 1;
 
-document.getElementById("xp").innerText=data.xp;
-document.getElementById("coins").innerText=data.coins;
-document.getElementById("lvl").innerText=level;
+document.getElementById("xp").innerText = data.xp;
+document.getElementById("coins").innerText = data.coins;
+document.getElementById("lvl").innerText = level;
 
-document.getElementById("user").innerText=
-"Welcome "+(localStorage.getItem("player")||"Soldier");
+document.getElementById("user").innerText =
+"Welcome " + (localStorage.getItem("player") || "Soldier");
 
 function start(){
-window.location.href="quiz.html";
+window.location.href = "quiz.html";
 }
 
 function downloadCert(){
 
-let name=localStorage.getItem("player")||"Soldier";
+let name = localStorage.getItem("player") || "Soldier";
 
-let text=
-"AGNEVEEERX CERTIFICATE\n\n"+
+let text =
+"AGNEVEER MOCK TEST CERTIFICATE\n\n"+
 "Name: "+name+"\n"+
 "Level: "+level+"\n"+
 "XP: "+data.xp+"\n\n"+
-"Status: Qualified Soldier";
+"Status: Qualified Candidate";
 
-let blob=new Blob([text],{type:"text/plain"});
-let a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download="certificate.txt";
+let blob = new Blob([text], {type:"text/plain"});
+let a = document.createElement("a");
+a.href = URL.createObjectURL(blob);
+a.download = "Agniveer_Certificate.txt";
 a.click();
 }
 
