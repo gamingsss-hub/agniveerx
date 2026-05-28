@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>AgniveerX Quiz</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:20px;
+}
+
+.quiz-box{
+background:#1e293b;
+padding:30px;
+border-radius:20px;
+width:100%;
+max-width:500px;
+box-shadow:0 0 25px #00e6ff;
+}
+
+h2{
+margin-bottom:20px;
+}
+
+.option{
+background:#111827;
+padding:15px;
+margin-top:12px;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.option:hover{
+background:#00e6ff;
+color:black;
+transform:scale(1.03);
+}
+
+#nextBtn{
+margin-top:20px;
+padding:12px 20px;
+border:none;
+border-radius:12px;
+background:#00e6ff;
+font-weight:bold;
+cursor:pointer;
+display:none;
+}
+
+#score{
+margin-top:20px;
+font-size:20px;
+color:#22c55e;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<h2 id="question">
+Question Loading...
+</h2>
+
+<div id="answers"></div>
+
+<button id="nextBtn"
+onclick="nextQuestion()">
+Next Question
+</button>
+
+<div id="score"></div>
+
+</div>
+
+<script>
+
+const quiz = [
+
+{
+question:"भारत की राजधानी क्या है?",
+answers:["Mumbai","Delhi","Kolkata","Chennai"],
+correct:"Delhi"
+},
+
+{
+question:"भारत का राष्ट्रीय पशु कौन है?",
+answers:["Lion","Tiger","Elephant","Horse"],
+correct:"Tiger"
+},
+
+{
+question:"15 + 10 = ?",
+answers:["20","25","30","35"],
+correct:"25"
+},
+
+{
+question:"Water formula?",
+answers:["H2O","CO2","O2","NaCl"],
+correct:"H2O"
+},
+
+{
+question:"Largest planet?",
+answers:["Earth","Mars","Jupiter","Venus"],
+correct:"Jupiter"
+}
+
+];
+
+let current = 0;
+let score = 0;
+
+const question =
+document.getElementById("question");
+
+const answers =
+document.getElementById("answers");
+
+const nextBtn =
+document.getElementById("nextBtn");
+
+function loadQuestion(){
+
+nextBtn.style.display="none";
+
+let q = quiz[current];
+
+question.innerText = q.question;
+
+answers.innerHTML = "";
+
+q.answers.forEach(answer=>{
+
+let div =
+document.createElement("div");
+
+div.classList.add("option");
+
+div.innerText = answer;
+
+div.onclick = ()=>checkAnswer(answer);
+
+answers.appendChild(div);
+
+});
+
+}
+
+function checkAnswer(answer){
+
+let correct = quiz[current].correct;
+
+let options =
+document.querySelectorAll(".option");
+
+options.forEach(option=>{
+
+option.style.pointerEvents="none";
+
+if(option.innerText === correct){
+
+option.style.background="#22c55e";
+
+}
+
+if(
+option.innerText === answer
+&&
+answer !== correct
+){
+
+option.style.background="red";
+
+}
+
+});
+
+if(answer === correct){
+
+score++;
+
+}
+
+nextBtn.style.display="block";
+
+}
+
+function nextQuestion(){
+
+current++;
+
+if(current < quiz.length){
+
+loadQuestion();
+
+}
+else{
+
+question.innerText =
+"🎉 Quiz Finished!";
+
+answers.innerHTML = "";
+
+nextBtn.style.display="none";
+
+document.getElementById("score")
+.innerText =
+"Your Score: " + score;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
