@@ -1,153 +1,235 @@
-const quiz = [
+window.quiz = [
 
 {
-question:"भारत का राष्ट्रीय गान किसने लिखा?",
-answers:["Tagore","Premchand","Gandhi","Nehru"],
-correct:"Tagore"
+question:"भारत का संविधान किसने बनाया?",
+answers:["Dr. B.R. Ambedkar","Mahatma Gandhi","Jawaharlal Nehru","Sardar Patel"],
+correct:"Dr. B.R. Ambedkar"
 },
-
 {
-question:"Indian Army Day celebrated on?",
-answers:["15 Jan","26 Jan","15 Aug","2 Oct"],
-correct:"15 Jan"
+question:"Largest continent?",
+answers:["Asia","Africa","Europe","Australia"],
+correct:"Asia"
 },
-
 {
-question:"भारत का संविधान कब लागू हुआ?",
-answers:["1947","1950","1949","1952"],
-correct:"1950"
+question:"Square of 17?",
+answers:["289","256","196","324"],
+correct:"289"
 },
-
 {
-question:"25 × 12 = ?",
-answers:["250","300","350","280"],
-correct:"300"
+question:"CPU full form?",
+answers:["Central Processing Unit","Central Program Unit","Computer Power Unit","Control Processing Unit"],
+correct:"Central Processing Unit"
 },
-
 {
-question:"Largest planet?",
-answers:["Mars","Earth","Jupiter","Venus"],
-correct:"Jupiter"
+question:"Water boiling point?",
+answers:["100°C","90°C","80°C","110°C"],
+correct:"100°C"
 },
-
+{
+question:"Who discovered gravity?",
+answers:["Newton","Einstein","Tesla","Galileo"],
+correct:"Newton"
+},
 {
 question:"H2SO4 is?",
-answers:["Hydrochloric Acid","Sulfuric Acid","Nitric Acid","Water"],
+answers:["Sulfuric Acid","Hydrochloric Acid","Nitric Acid","Acetic Acid"],
 correct:"Sulfuric Acid"
 },
-
 {
-question:"भारत का राष्ट्रीय पशु कौन है?",
-answers:["Lion","Tiger","Elephant","Horse"],
+question:"Indian currency?",
+answers:["Dollar","Rupee","Euro","Yen"],
+correct:"Rupee"
+},
+{
+question:"National animal of India?",
+answers:["Lion","Tiger","Elephant","Leopard"],
 correct:"Tiger"
 },
-
 {
-question:"15² = ?",
-answers:["125","225","250","215"],
-correct:"225"
+question:"1000 mg = ?",
+answers:["1 gram","10 gram","100 gram","0.1 gram"],
+correct:"1 gram"
 },
 
 {
-question:"Who is known as Iron Man of India?",
-answers:["Nehru","Patel","Gandhi","Bose"],
-correct:"Patel"
+question:"Who is APJ Abdul Kalam?",
+answers:["Scientist","Doctor","Teacher","Actor"],
+correct:"Scientist"
 },
-
 {
-question:"Speed of light?",
-answers:["3×10^8","5×10^6","9×10^5","1×10^7"],
-correct:"3×10^8"
+question:"1 km = ? meters",
+answers:["100","1000","10000","500"],
+correct:"1000"
 },
-
 {
-question:"भारत की राजधानी?",
-answers:["Mumbai","Delhi","Kolkata","Chennai"],
-correct:"Delhi"
+question:"Prime number?",
+answers:["2","4","6","8"],
+correct:"2"
 },
-
 {
-question:"Who invented bulb?",
-answers:["Newton","Einstein","Edison","Tesla"],
-correct:"Edison"
+question:"India independence year?",
+answers:["1947","1950","1945","1960"],
+correct:"1947"
 },
-
 {
-question:"9 × 9 = ?",
-answers:["72","81","99","89"],
-correct:"81"
+question:"Which gas do plants use?",
+answers:["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],
+correct:"Carbon Dioxide"
 },
-
 {
-question:"Largest ocean?",
-answers:["Indian","Atlantic","Pacific","Arctic"],
-correct:"Pacific"
+question:"Speed of sound?",
+answers:["343 m/s","300 m/s","500 m/s","100 m/s"],
+correct:"343 m/s"
 },
-
 {
-question:"भारत का राष्ट्रीय पक्षी?",
-answers:["Crow","Parrot","Peacock","Sparrow"],
-correct:"Peacock"
+question:"Which is liquid metal?",
+answers:["Iron","Mercury","Gold","Silver"],
+correct:"Mercury"
 },
-
 {
-question:"Water formula?",
-answers:["H2O","CO2","O2","NaCl"],
-correct:"H2O"
+question:"Binary of 3?",
+answers:["11","10","01","100"],
+correct:"11"
 },
-
 {
-question:"Indian national flower?",
-answers:["Rose","Lotus","Sunflower","Lily"],
+question:"Full form of RAM?",
+answers:["Random Access Memory","Read Access Memory","Run Access Memory","Real Active Memory"],
+correct:"Random Access Memory"
+},
+{
+question:"National flower of India?",
+answers:["Rose","Lotus","Lily","Sunflower"],
 correct:"Lotus"
 },
 
 {
-question:"50 ÷ 5 = ?",
-answers:["5","10","15","20"],
-correct:"10"
+question:"Who wrote Vande Mataram?",
+answers:["Bankim Chandra","Tagore","Nehru","Bose"],
+correct:"Bankim Chandra"
+},
+{
+question:"1 byte = ? bits",
+answers:["8","4","16","2"],
+correct:"8"
+},
+{
+question:"Earth shape?",
+answers:["Round","Flat","Oval","Cube"],
+correct:"Round"
+},
+{
+question:"Which is noble gas?",
+answers:["Oxygen","Nitrogen","Helium","Hydrogen"],
+correct:"Helium"
+},
+{
+question:"10 × 10 = ?",
+answers:["100","110","90","120"],
+correct:"100"
 },
 
 {
-question:"Who discovered gravity?",
-answers:["Newton","Galileo","Tesla","Einstein"],
-correct:"Newton"
-},
-
-{
-question:"Which gas humans inhale?",
-answers:["CO2","Oxygen","Nitrogen","Hydrogen"],
-correct:"Oxygen"
-},
-
-{
-question:"भारत का राष्ट्रीय खेल?",
-answers:["Cricket","Hockey","Football","Kabaddi"],
-correct:"Hockey"
-},
-
-{
-question:"Square root of 144?",
-answers:["10","11","12","14"],
-correct:"12"
-},
-
-{
-question:"CPU full form?",
-answers:["Central Process Unit","Central Processing Unit","Computer Processing Unit","Core Process Unit"],
-correct:"Central Processing Unit"
-},
-
-{
-question:"Who wrote Ramayana?",
-answers:["Valmiki","Tulsidas","Kalidas","Vedvyas"],
-correct:"Valmiki"
-},
-
-{
-question:"Which planet is known as Red Planet?",
-answers:["Earth","Mars","Venus","Saturn"],
+question:"Which planet is Red Planet?",
+answers:["Mars","Venus","Earth","Jupiter"],
 correct:"Mars"
 },
+{
+question:"Largest ocean?",
+answers:["Pacific","Atlantic","Indian","Arctic"],
+correct:"Pacific"
+},
+{
+question:"Human blood type system?",
+answers:["ABO","ABC","XYZ","A1B1"],
+correct:"ABO"
+},
+{
+question:"Vitamin C deficiency causes?",
+answers:["Scurvy","Rickets","Anemia","Diabetes"],
+correct:"Scurvy"
+},
+{
+question:"Who invented bulb?",
+answers:["Edison","Newton","Tesla","Einstein"],
+correct:"Edison"
+},
+
+{
+question:"Force formula?",
+answers:["F=ma","F=m/a","F=a/m","F=mv"],
+correct:"F=ma"
+},
+{
+question:"India capital?",
+answers:["Delhi","Mumbai","Kolkata","Chennai"],
+correct:"Delhi"
+},
+{
+question:"Which metal is lightest?",
+answers:["Lithium","Iron","Gold","Copper"],
+correct:"Lithium"
+},
+{
+question:"Largest organ?",
+answers:["Skin","Heart","Brain","Liver"],
+correct:"Skin"
+},
+{
+question:"Photosynthesis occurs in?",
+answers:["Leaf","Root","Stem","Flower"],
+correct:"Leaf"
+},
+
+{
+question:"1 hour = ? seconds",
+answers:["3600","600","1200","1800"],
+correct:"3600"
+},
+{
+question:"Which is non-metal?",
+answers:["Oxygen","Iron","Copper","Aluminium"],
+correct:"Oxygen"
+},
+{
+question:"SI unit of time?",
+answers:["Second","Hour","Minute","Day"],
+correct:"Second"
+},
+{
+question:"Which is national bird?",
+answers:["Peacock","Crow","Parrot","Sparrow"],
+correct:"Peacock"
+},
+{
+question:"Largest state by population?",
+answers:["UP","Bihar","MP","Maharashtra"],
+correct:"UP"
+},
+
+{
+question:"CPU part responsible for calculations?",
+answers:["ALU","CU","RAM","ROM"],
+correct:"ALU"
+},
+{
+question:"Which acid is in lemon?",
+answers:["Citric Acid","Sulfuric Acid","Hydrochloric","Nitric"],
+correct:"Citric Acid"
+},
+{
+question:"Who is father of nation?",
+answers:["Gandhi","Nehru","Patel","Bose"],
+correct:"Gandhi"
+},
+{
+question:"1² + 2² + 3² = ?",
+answers:["14","10","12","15"],
+correct:"14"
+},
+{
+question:"Speed = distance/time?",
+answers:["True","False","Maybe","None"],
+correct:"True"
+}
 
 ];
