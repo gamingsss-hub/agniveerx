@@ -24,56 +24,117 @@ font-family:'Poppins',sans-serif;
 body{
 background:#0f172a;
 color:white;
+overflow-x:hidden;
+}
+
+.topbar{
 display:flex;
-justify-content:center;
+justify-content:space-between;
 align-items:center;
-height:100vh;
-padding:20px;
-}
-
-.quiz-box{
-background:#1e293b;
-padding:30px;
-border-radius:20px;
-width:100%;
-max-width:500px;
-box-shadow:0 0 25px #00e6ff;
-}
-
-h2{
-margin-bottom:20px;
-}
-
-.option{
+padding:18px;
 background:#111827;
-padding:15px;
-margin-top:12px;
-border-radius:12px;
-cursor:pointer;
-transition:0.3s;
+position:sticky;
+top:0;
+z-index:100;
+box-shadow:0 0 15px rgba(0,230,255,0.3);
 }
 
-.option:hover{
-background:#00e6ff;
-color:black;
-transform:scale(1.03);
+.logo{
+font-size:28px;
+font-weight:700;
+color:#00e6ff;
+text-shadow:0 0 10px #00e6ff;
 }
 
-#nextBtn{
-margin-top:20px;
-padding:12px 20px;
+.menu button{
+padding:10px 18px;
 border:none;
 border-radius:12px;
 background:#00e6ff;
 font-weight:bold;
 cursor:pointer;
-display:none;
+margin-left:8px;
 }
 
-#score{
-margin-top:20px;
+.hero{
+padding:70px 20px;
+text-align:center;
+background:
+linear-gradient(135deg,#00e6ff,#8b5cf6);
+animation: glow 3s infinite alternate;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.hero p{
 font-size:20px;
-color:#22c55e;
+}
+
+.start-btn{
+margin-top:25px;
+padding:15px 35px;
+border:none;
+border-radius:15px;
+background:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.start-btn:hover{
+transform:scale(1.08);
+}
+
+@keyframes glow{
+
+from{
+box-shadow:0 0 10px #00e6ff;
+}
+
+to{
+box-shadow:0 0 30px #8b5cf6;
+}
+
+}
+
+.section-title{
+padding:25px;
+font-size:28px;
+color:#00e6ff;
+}
+
+.subjects{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:25px;
+border-radius:18px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.card:hover{
+transform:translateY(-10px)
+scale(1.05);
+
+box-shadow:0 0 25px #00e6ff;
+}
+
+.subject-icon{
+font-size:50px;
+margin-bottom:10px;
 }
 
 </style>
@@ -82,154 +143,196 @@ color:#22c55e;
 
 <body>
 
-<div class="quiz-box">
+<!-- TOPBAR -->
 
-<h2 id="question">
-Question Loading...
-</h2>
+<div class="topbar">
 
-<div id="answers"></div>
+<div class="logo">
+⚡ AgniveerX
+</div>
 
-<button id="nextBtn"
-onclick="nextQuestion()">
-Next Question
+<div class="menu">
+
+<button>
+🏠 Home
 </button>
 
-<div id="score"></div>
+<button>
+📚 Subjects
+</button>
+
+<button>
+🏆 Leaderboard
+</button>
 
 </div>
 
-<script>
+</div>
 
-const quiz = [
+<!-- HERO SECTION -->
 
-{
-question:"भारत की राजधानी क्या है?",
-answers:["Mumbai","Delhi","Kolkata","Chennai"],
-correct:"Delhi"
-},
+<div class="hero">
 
-{
-question:"2 + 2 = ?",
-answers:["3","4","5","6"],
-correct:"4"
-},
+<h1>
+🚀 Crack Agniveer Exam
+</h1>
 
-{
-question:"Largest planet?",
-answers:["Earth","Mars","Jupiter","Venus"],
-correct:"Jupiter"
-}
+<p>
+Practice 500+ Important Questions
+</p>
 
-];
+<button class="start-btn"
+onclick="location.href='quiz.html'">
+▶ Start Quiz
+</button>
 
-let current = 0;
-let score = 0;
+</div>
 
-const question =
-document.getElementById("question");
+<!-- SUBJECTS -->
 
-const answers =
-document.getElementById("answers");
+<h2 class="section-title">
+📚 Subjects
+</h2>
 
-const nextBtn =
-document.getElementById("nextBtn");
+<div class="subjects">
 
-function loadQuestion(){
+<div class="card">
 
-nextBtn.style.display="none";
+<div class="subject-icon">
+➗
+</div>
 
-let q = quiz[current];
+<h2>Math</h2>
 
-question.innerText = q.question;
+<p>
+Practice Aptitude Questions
+</p>
 
-answers.innerHTML = "";
+</div>
 
-q.answers.forEach(answer=>{
+<div class="card">
 
-let div =
-document.createElement("div");
+<div class="subject-icon">
+🧠
+</div>
 
-div.classList.add("option");
+<h2>Reasoning</h2>
 
-div.innerText = answer;
+<p>
+Boost Logical Thinking
+</p>
 
-div.onclick = ()=>checkAnswer(answer);
+</div>
 
-answers.appendChild(div);
+<div class="card">
 
-});
+<div class="subject-icon">
+🌍
+</div>
 
-}
+<h2>General Knowledge</h2>
 
-function checkAnswer(answer){
+<p>
+Important GK Questions
+</p>
 
-let correct = quiz[current].correct;
+</div>
 
-let options =
-document.querySelectorAll(".option");
+<div class="card">
 
-options.forEach(option=>{
+<div class="subject-icon">
+🔬
+</div>
 
-option.style.pointerEvents="none";
+<h2>Science</h2>
 
-if(option.innerText === correct){
+<p>
+Physics, Chemistry & Biology
+</p>
 
-option.style.background="#22c55e";
+</div>
 
-}
+<div class="card">
 
-if(
-option.innerText === answer
-&&
-answer !== correct
-){
+<div class="subject-icon">
+📖
+</div>
 
-option.style.background="red";
+<h2>English</h2>
 
-}
+<p>
+Grammar & Vocabulary
+</p>
 
-});
+</div>
 
-if(answer === correct){
+</div>
 
-score++;
+<!-- STATS SECTION -->
 
-}
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+padding:25px;
+">
 
-nextBtn.style.display="block";
+<div class="card">
 
-}
+<h1 style="color:#00e6ff;">
+500+
+</h1>
 
-function nextQuestion(){
+<p>
+Questions
+</p>
 
-current++;
+</div>
 
-if(current < quiz.length){
+<div class="card">
 
-loadQuestion();
+<h1 style="color:#8b5cf6;">
+5
+</h1>
 
-}
-else{
+<p>
+Subjects
+</p>
 
-question.innerText =
-"🎉 Quiz Finished!";
+</div>
 
-answers.innerHTML = "";
+<div class="card">
 
-nextBtn.style.display="none";
+<h1 style="color:#22c55e;">
+24/7
+</h1>
 
-document.getElementById("score")
-.innerText =
-"Your Score: " + score;
+<p>
+Practice Access
+</p>
 
-}
+</div>
 
-}
+</div>
 
-loadQuestion();
+<!-- FOOTER -->
 
-</script>
+<div style="
+padding:25px;
+text-align:center;
+background:#111827;
+margin-top:30px;
+">
+
+<h2 style="color:#00e6ff;">
+⚡ AgniveerX
+</h2>
+
+<p style="margin-top:10px;">
+Practice • Learn • Crack Exam
+</p>
+
+</div>
 
 </body>
 </html>
