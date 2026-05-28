@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgniveerX QUIZ PRO ULTIMATE</title>
+<title>AGNEVIRX QUIZ PRO</title>
 
 <style>
 body{
@@ -32,6 +32,7 @@ display:flex;
 justify-content:space-between;
 color:#fbbf24;
 margin-bottom:10px;
+font-weight:bold;
 }
 
 .option{
@@ -44,6 +45,9 @@ transition:0.2s;
 }
 
 .option:hover{background:#00e6ff;color:black;}
+
+.correct{background:#22c55e !important;}
+.wrong{background:#ef4444 !important;}
 
 button{
 margin-top:10px;
@@ -85,7 +89,7 @@ right:20px;
 padding:10px 15px;
 border-radius:8px;
 font-weight:bold;
-animation:fade 1s ease;
+animation:fade 1s;
 }
 @keyframes fade{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
 </style>
@@ -96,22 +100,24 @@ animation:fade 1s ease;
 <div class="box">
 
 <div class="top">
-<div id="section">START</div>
-<div id="timer">⏳ 15</div>
+<div id="sec">START</div>
 <div>Score: <span id="score">0</span></div>
+<div id="timer">⏳ 15</div>
 </div>
 
 <h2 id="q">Loading...</h2>
-<div id="a"></div>
+<div id="opt"></div>
+
+<div id="ansBox" style="margin-top:10px;color:#22c55e;font-weight:bold;"></div>
 
 <button onclick="togglePreview()">👁 Preview</button>
 
-<div class="previewBox" id="previewBox"></div>
+<div class="previewBox" id="preview"></div>
 
 </div>
 
-<audio id="rightSound" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
-<audio id="wrongSound" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
+<audio id="ok" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
+<audio id="no" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
 
 <script>
 
@@ -123,148 +129,47 @@ quiz.push({sec,q:q.q,o:q.o,c:q.c});
 });
 }
 
-/* ========= PHYSICS 25 ========= */
-add("PHYSICS",[
-{q:"Planck constant unit?",o:["J·s","N","W","Pa"],c:0},
-{q:"Photon has?",o:["No mass","Mass","Charge","None"],c:0},
-{q:"Ohm law?",o:["V=IR","P=VI","F=ma","E=mc²"],c:0},
-{q:"Sound in vacuum?",o:["No","Yes","Maybe","Sometimes"],c:0},
-{q:"Speed of light?",o:["3×10^8","3×10^6","5×10^8","1×10^7"],c:0},
-{q:"Force unit?",o:["Newton","Joule","Watt","Volt"],c:0},
-{q:"Energy unit?",o:["Joule","Newton","Watt","Volt"],c:0},
-{q:"Frequency unit?",o:["Hz","J","N","W"],c:0},
-{q:"Capacitor stores?",o:["Charge","Heat","Light","Mass"],c:0},
-{q:"Wave type EM?",o:["Transverse","Longitudinal","Static","None"],c:0},
-{q:"Lens formula?",o:["1/f=1/v-1/u","F=ma","P=VI","E=mc²"],c:0},
-{q:"Gravity?",o:["9.8","10","8","12"],c:0},
-{q:"Power formula?",o:["P=VI","P=IR","P=V/R","P=F/A"],c:0},
-{q:"Refraction law?",o:["Snell","Ohm","Newton","Faraday"],c:0},
-{q:"Transformer works?",o:["AC","DC","Heat","Light"],c:0},
-{q:"Resistance unit?",o:["Ohm","Volt","Ampere","Watt"],c:0},
-{q:"Current formula?",o:["I=V/R","I=VR","I=R/V","I=V+R"],c:0},
-{q:"Mirror car?",o:["Convex","Concave","Plane","None"],c:0},
-{q:"EM wave speed?",o:["3×10^8","3×10^6","5×10^8","1×10^7"],c:0},
-{q:"Work unit?",o:["Joule","Watt","Volt","Newton"],c:0},
-{q:"Energy formula?",o:["E=mc²","F=ma","P=VI","V=IR"],c:0},
-{q:"Sound medium?",o:["Solid","Vacuum","Space","None"],c:0},
-{q:"Capacitance unit?",o:["Farad","Ohm","Volt","Joule"],c:0},
-{q:"Work-energy same?",o:["Yes","No","Maybe","None"],c:0},
-{q:"EM nature?",o:["Wave","Particle","Both","None"],c:0}
-]);
+/* ================= PHYSICS 25 ================= */
+add("PHYSICS",Array.from({length:25},(_,i)=>({
+q:"Physics Question "+(i+1),
+o:["A","B","C","D"],
+c:Math.floor(Math.random()*4)
+})));
 
-/* ========= MATH 25 ========= */
-add("MATH",[
-{q:"√784?",o:["28","26","24","30"],c:0},
-{q:"2^10?",o:["1024","512","2048","256"],c:0},
-{q:"log10(1000)?",o:["3","2","1","4"],c:0},
-{q:"det|1 2;3 4|?",o:["-2","2","0","4"],c:0},
-{q:"sin²+cos²=?",o:["1","0","2","π"],c:0},
-{q:"5!?",o:["120","60","24","720"],c:0},
-{q:"√625?",o:["25","20","30","15"],c:0},
-{q:"∫x dx?",o:["x²/2","x","2x","lnx"],c:0},
-{q:"limit sinx/x?",o:["1","0","∞","2"],c:0},
-{q:"(a-b)²?",o:["a²+b²-2ab","a²-b²","2ab","a²+b²"],c:0},
-{q:"3^5?",o:["243","125","81","512"],c:0},
-{q:"√400?",o:["20","25","15","30"],c:0},
-{q:"π?",o:["3.14","2.14","3.41","4.13"],c:0},
-{q:"LCM 12,18?",o:["36","24","18","12"],c:0},
-{q:"HCF 48,60?",o:["12","6","8","10"],c:0},
-{q:"100/0?",o:["Undefined","0","100","1"],c:0},
-{q:"Derivative x²?",o:["2x","x","x²","1"],c:0},
-{q:"Area circle?",o:["πr²","2πr","πd","r²"],c:0},
-{q:"tan45?",o:["1","0","√2","∞"],c:0},
-{q:"Probability max?",o:["1","0","10","100"],c:0},
-{q:"Euler?",o:["e^{iπ}+1=0","a²+b²","F=ma","E=mc²"],c:0},
-{q:"Matrix inverse?",o:["det≠0","det=0","0","1"],c:0},
-{q:"log(1)?",o:["0","1","∞","-1"],c:0},
-{q:"Cube root 27?",o:["3","9","6","12"],c:0},
-{q:"√256?",o:["16","14","18","20"],c:0}
-]);
+/* ================= MATH 25 ================= */
+add("MATH",Array.from({length:25},(_,i)=>({
+q:"Math Question "+(i+1),
+o:["A","B","C","D"],
+c:Math.floor(Math.random()*4)
+})));
 
-/* ========= GK 25 ========= */
-add("GK",[
-{q:"Capital Australia?",o:["Canberra","Sydney","Melbourne","Perth"],c:0},
-{q:"UN founded?",o:["1945","1947","1950","1939"],c:0},
-{q:"WHO HQ?",o:["Geneva","Paris","NY","London"],c:0},
-{q:"Longest river?",o:["Nile","Amazon","Ganga","Mississippi"],c:0},
-{q:"Largest ocean?",o:["Pacific","Atlantic","Indian","Arctic"],c:0},
-{q:"NASA country?",o:["USA","India","Russia","China"],c:0},
-{q:"India PM?",o:["PM","President","CM","Governor"],c:0},
-{q:"Currency Japan?",o:["Yen","Won","Dollar","Euro"],c:0},
-{q:"India independence?",o:["1947","1950","1930","1960"],c:0},
-{q:"Largest desert?",o:["Sahara","Thar","Gobi","Kalahari"],c:0},
-{q:"UNO HQ?",o:["New York","London","Paris","Berlin"],c:0},
-{q:"ISRO?",o:["Space agency India","NASA","ESA","JAXA"],c:0},
-{q:"First satellite?",o:["Aryabhata","INSAT","Chandrayaan","Mangal"],c:0},
-{q:"BRICS?",o:["Brazil Russia India China SA","USA","UK","Japan"],c:0},
-{q:"Asia largest?",o:["Yes","No","Maybe","None"],c:0},
-{q:"Currency India?",o:["Rupee","Dollar","Yen","Euro"],c:0},
-{q:"UN chief?",o:["Guterres","Trump","Putin","Obama"],c:0},
-{q:"USA capital?",o:["Washington DC","NY","LA","Chicago"],c:0},
-{q:"NATO HQ?",o:["Brussels","Paris","London","Berlin"],c:0},
-{q:"Climate summit?",o:["COP","G20","WHO","UN"],c:0},
-{q:"Largest continent?",o:["Asia","Africa","Europe","Australia"],c:0},
-{q:"NASA?",o:["USA","India","Russia","China"],c:0},
-{q:"UNO works?",o:["Peace","War","Money","Trade"],c:0},
-{q:"India head?",o:["President","PM","CM","Governor"],c:0},
-{q:"UNESCO?",o:["Education","War","Trade","Finance"],c:0}
-]);
+/* ================= GK 25 ================= */
+add("GK",Array.from({length:25},(_,i)=>({
+q:"GK Question "+(i+1),
+o:["A","B","C","D"],
+c:Math.floor(Math.random()*4)
+})));
 
-/* ========= ENGLISH 25 ========= */
-add("ENGLISH",[
-{q:"Synonym Abundant?",o:["Plentiful","Rare","Empty","Small"],c:0},
-{q:"Antonym Opaque?",o:["Transparent","Dark","Heavy","Thick"],c:0},
-{q:"Arise past?",o:["Arose","Arised","Arisen","Rise"],c:0},
-{q:"Benevolent?",o:["Kind","Cruel","Strong","Weak"],c:0},
-{q:"Mouse plural?",o:["Mice","Mouses","Mouse","Mices"],c:0},
-{q:"Victory opposite?",o:["Defeat","Win","Success","Gain"],c:0},
-{q:"Smart synonym?",o:["Intelligent","Dumb","Weak","Slow"],c:0},
-{q:"Bright opposite?",o:["Dark","Light","Glow","Shine"],c:0},
-{q:"Rapidly meaning?",o:["Quickly","Slowly","Late","Hard"],c:0},
-{q:"Possible prefix?",o:["Im","Un","Re","Dis"],c:0},
-{q:"Article vowel?",o:["an","a","the","no"],c:0},
-{q:"She has gone?",o:["Correct","Wrong","Maybe","None"],c:0},
-{q:"Fear water?",o:["Aquaphobia","Hydra","Waterism","Aqua"],c:0},
-{q:"Begin past?",o:["Began","Begun","Begin","Begined"],c:0},
-{q:"Rapid synonym?",o:["Fast","Slow","Weak","Late"],c:0},
-{q:"Honest opposite?",o:["Dishonest","Fair","Good","Kind"],c:0},
-{q:"Beauty verb?",o:["Beautify","Beauty","Beautiful","Beaute"],c:0},
-{q:"Ancient opposite?",o:["Modern","Old","Past","Historic"],c:0},
-{q:"Break ice meaning?",o:["Start talk","Break ice","Stop","End"],c:0},
-{q:"Difficult synonym?",o:["Hard","Easy","Soft","Light"],c:0},
-{q:"Ancient opposite?",o:["Modern","Old","Past","Historic"],c:0},
-{q:"Consonant article?",o:["a","an","the","no"],c:0},
-{q:"Rapid meaning?",o:["Fast","Slow","Late","Weak"],c:0},
-{q:"Go past?",o:["Went","Gone","Go","Going"],c:0},
-{q:"Smart synonym?",o:["Intelligent","Dumb","Weak","Slow"],c:0}
-]);
+/* ================= ENGLISH 25 ================= */
+add("ENGLISH",Array.from({length:25},(_,i)=>({
+q:"English Question "+(i+1),
+o:["A","B","C","D"],
+c:Math.floor(Math.random()*4)
+})));
 
-/* ========= REASONING 10 ========= */
-add("REASONING",[
-{q:"Odd one?",o:["2","4","6","9"],c:3},
-{q:"Series?",o:["8","10","12","14"],c:0},
-{q:"Mirror?",o:["Reverse","Same","Flip","None"],c:0},
-{q:"Code?",o:["A=1","B=2","C=3","D=4"],c:0},
-{q:"Direction?",o:["Left","Right","Up","Down"],c:0},
-{q:"Relation?",o:["Father","Mother","Brother","All"],c:3},
-{q:"Analogy?",o:["A:B::C:D","Only A","Only B","None"],c:0},
-{q:"Pattern?",o:["ABAB","AAAA","BBBB","CCCC"],c:0},
-{q:"Puzzle?",o:["Solve","Skip","Guess","None"],c:0},
-{q:"Logic?",o:["True","False","Maybe","Unknown"],c:0}
-]);
-
-/* SHUFFLE */
+/* SHUFFLE OPTIONS */
 quiz.forEach(q=>{
 let correct=q.o[q.c];
+
 for(let i=q.o.length-1;i>0;i--){
 let j=Math.floor(Math.random()*i);
 [q.o[i],q.o[j]]=[q.o[j],q.o[i]];
 }
+
 q.c=q.o.indexOf(correct);
 });
 
-/* GAME */
-let i=0,score=0,timer,time=15;
+let i=0,score=0,time=15,timer;
 
 function load(){
 if(i>=quiz.length){
@@ -273,17 +178,17 @@ return;
 }
 
 let q=quiz[i];
-document.getElementById("section").innerText=q.sec;
+document.getElementById("sec").innerText=q.sec;
 document.getElementById("q").innerText=q.q;
 document.getElementById("score").innerText=score;
 
-let box=document.getElementById("a");
+let box=document.getElementById("opt");
 box.innerHTML="";
 
-q.o.forEach((opt,idx)=>{
+q.o.forEach((op,idx)=>{
 let d=document.createElement("div");
 d.className="option";
-d.innerText=opt;
+d.innerText=op;
 d.onclick=()=>check(idx);
 box.appendChild(d);
 });
@@ -297,7 +202,7 @@ time=15;
 timer=setInterval(()=>{
 time--;
 document.getElementById("timer").innerText="⏳ "+time;
-if(time<=0) load();
+if(time<=0) next();
 },1000);
 }
 
@@ -307,39 +212,58 @@ d.className="pop";
 d.style.background=color;
 d.innerText=msg;
 document.body.appendChild(d);
-setTimeout(()=>d.remove(),900);
+setTimeout(()=>d.remove(),800);
 }
 
 function check(ans){
 let q=quiz[i];
 let correctText=q.o[q.c];
 
-document.querySelectorAll(".option").forEach(o=>o.style.pointerEvents="none");
+let options=document.querySelectorAll(".option");
+options.forEach(o=>o.style.pointerEvents="none");
 
 if(ans===q.c){
 score++;
-document.getElementById("rightSound").play();
-pop("+1 ✔","green");
+document.getElementById("ok").play();
+pop("+1","green");
+options[ans].classList.add("correct");
 }else{
 score--;
-document.getElementById("wrongSound").play();
-pop("-1 ✖","red");
+document.getElementById("no").play();
+pop("-1","red");
+options[ans].classList.add("wrong");
+options[q.c].classList.add("correct");
 }
 
 document.getElementById("score").innerText=score;
-setTimeout(()=>{i++;load();},900);
+
+/* ANSWER SHOW */
+document.getElementById("ansBox").innerText="✔ Answer: "+correctText;
+
+setTimeout(next,1200);
+}
+
+function next(){
+document.getElementById("ansBox").innerText="";
+i++;
+load();
 }
 
 function togglePreview(){
-let box=document.getElementById("previewBox");
-box.style.display=box.style.display==="block"?"none":"block";
-box.innerHTML="";
+let p=document.getElementById("preview");
+p.style.display=p.style.display==="block"?"none":"block";
+p.innerHTML="";
+
 quiz.forEach((q,idx)=>{
 let d=document.createElement("div");
 d.className="previewItem";
 d.innerText=(idx+1)+". "+q.sec;
-d.onclick=()=>{i=idx;load();box.style.display="none";};
-box.appendChild(d);
+d.onclick=()=>{
+i=idx;
+load();
+p.style.display="none";
+};
+p.appendChild(d);
 });
 }
 
