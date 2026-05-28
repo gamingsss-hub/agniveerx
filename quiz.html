@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mock Test Level 3</title>
+<title>Army Mock Test</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -43,7 +43,6 @@ color:black;
 
 #result{
 margin-top:15px;
-font-size:18px;
 color:#22c55e;
 }
 </style>
@@ -52,21 +51,18 @@ color:#22c55e;
 <body>
 
 <div class="box">
-
 <h2 id="q">Loading...</h2>
 <div id="a"></div>
-
 <div id="result"></div>
-
 </div>
 
 <script>
 
-let quiz = [
+let quiz=[
 {q:"2+2?",a:["3","4","5"],c:"4"},
-{q:"Sun rises in?",a:["West","East","North"],c:"East"},
-{q:"Water formula?",a:["H2O","CO2","O2"],c:"H2O"},
 {q:"India capital?",a:["Delhi","Mumbai","Kolkata"],c:"Delhi"},
+{q:"Water formula?",a:["H2O","CO2","O2"],c:"H2O"},
+{q:"Sun rises in?",a:["East","West","North"],c:"East"},
 {q:"5×5?",a:["20","25","30"],c:"25"}
 ];
 
@@ -90,9 +86,7 @@ quiz[i].a.forEach(x=>{
 let d=document.createElement("div");
 d.className="option";
 d.innerText=x;
-
 d.onclick=()=>check(x);
-
 box.appendChild(d);
 
 });
@@ -100,35 +94,30 @@ box.appendChild(d);
 }
 
 function check(ans){
-
 if(ans==quiz[i].c){
 score++;
 }
-
 i++;
 load();
 }
 
 function finish(){
 
-// XP SYSTEM
-let data = JSON.parse(localStorage.getItem("data")||"{}");
+let data=JSON.parse(localStorage.getItem("data")||"{}");
 
 if(!data.xp){
-data={xp:0,coins:0,rank:"Rookie"};
+data={xp:0,coins:0};
 }
 
-data.xp += score*20;
-data.coins += score*5;
+data.xp += score*25;
+data.coins += score*10;
 
 localStorage.setItem("data",JSON.stringify(data));
 
 document.getElementById("q").innerText="🎉 Mission Complete";
-
 document.getElementById("a").innerHTML="";
-
 document.getElementById("result").innerHTML=
-"Score: "+score+"<br>XP Added: "+(score*20);
+"Score: "+score+" | XP Added: "+(score*25);
 
 setTimeout(()=>{
 window.location.href="index.html";
