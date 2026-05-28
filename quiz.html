@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgniveerX Quiz</title>
+<title>Mock Test</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -52,70 +52,48 @@ color:black;
 <div id="answers"></div>
 </div>
 
+<script src="questions.js"></script>
+
 <script>
 
-let quiz = [
-{
-question:"भारत का राष्ट्रीय पशु?",
-answers:["Lion","Tiger","Elephant","Horse"],
-correct:"Tiger"
-},
-{
-question:"2 + 2 = ?",
-answers:["3","4","5","6"],
-correct:"4"
-},
-{
-question:"Sun rises in?",
-answers:["West","North","East","South"],
-correct:"East"
-},
-{
-question:"Water formula?",
-answers:["H2O","CO2","O2","NaCl"],
-correct:"H2O"
-},
-{
-question:"India capital?",
-answers:["Mumbai","Delhi","Kolkata","Chennai"],
-correct:"Delhi"
-}
-];
-
-let current = 0;
-let time = 10;
+let quiz=[];
+let i=0;
+let time=10;
 let timer;
 
-window.onload = function(){
-loadQuestion();
-}
+window.onload=function(){
 
-function loadQuestion(){
-
-if(current >= quiz.length){
-document.getElementById("question").innerText = "🎉 Quiz Finished!";
-document.getElementById("answers").innerHTML = "";
-document.getElementById("timer").innerText = "";
+if(!window.quiz){
+document.getElementById("question").innerText="questions.js missing!";
 return;
 }
 
-let q = quiz[current];
+quiz=window.quiz;
+load();
+}
 
-document.getElementById("question").innerText = q.question;
+function load(){
 
-let box = document.getElementById("answers");
-box.innerHTML = "";
+if(i>=quiz.length){
+document.body.innerHTML="<h1>🎉 Test Finished</h1>";
+return;
+}
 
-q.answers.forEach(a=>{
-let div = document.createElement("div");
-div.className = "option";
-div.innerText = a;
+let q=quiz[i];
 
-div.onclick = function(){
-check(a);
-};
+document.getElementById("question").innerText=q.q;
 
-box.appendChild(div);
+let box=document.getElementById("answers");
+box.innerHTML="";
+
+q.a.forEach(x=>{
+let d=document.createElement("div");
+d.className="option";
+d.innerText=x;
+
+d.onclick=()=>check(x);
+
+box.appendChild(d);
 });
 
 startTimer();
@@ -124,18 +102,16 @@ startTimer();
 function startTimer(){
 
 clearInterval(timer);
-time = 10;
+time=10;
 
-document.getElementById("timer").innerText = "⏳ " + time;
-
-timer = setInterval(()=>{
+timer=setInterval(()=>{
 
 time--;
-document.getElementById("timer").innerText = "⏳ " + time;
+document.getElementById("timer").innerText="⏳ "+time;
 
-if(time <= 0){
-clearInterval(timer);
-next();
+if(time<=0){
+i++;
+load();
 }
 
 },1000);
@@ -143,30 +119,23 @@ next();
 
 function check(ans){
 
-clearInterval(timer);
+let correct=quiz[i].c;
 
-let correct = quiz[current].correct;
+document.querySelectorAll(".option").forEach(o=>{
+o.style.pointerEvents="none";
 
-let options = document.querySelectorAll(".option");
-
-options.forEach(o=>{
-o.style.pointerEvents = "none";
-
-if(o.innerText == correct){
-o.style.background = "green";
+if(o.innerText==correct){
+o.style.background="green";
 }
-
-if(o.innerText == ans && ans != correct){
-o.style.background = "red";
+if(o.innerText==ans && ans!=correct){
+o.style.background="red";
 }
 });
 
-setTimeout(next,800);
-}
-
-function next(){
-current++;
-loadQuestion();
+setTimeout(()=>{
+i++;
+load();
+},600);
 }
 
 </script>
