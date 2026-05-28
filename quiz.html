@@ -2,18 +2,13 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgniveerX Quiz</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -43,20 +38,8 @@ animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
-
-from{
-box-shadow:0 0 15px #00e6ff;
-}
-
-to{
-box-shadow:0 0 35px #8b5cf6;
-}
-
-}
-
-h2{
-margin-bottom:20px;
-font-size:28px;
+from{box-shadow:0 0 15px #00e6ff;}
+to{box-shadow:0 0 35px #8b5cf6;}
 }
 
 #timer{
@@ -115,9 +98,7 @@ width:0%;
 background:#00e6ff;
 transition:0.4s;
 }
-
 </style>
-
 </head>
 
 <body>
@@ -125,133 +106,85 @@ transition:0.4s;
 <div class="quiz-box">
 
 <div class="progress">
-
-<div class="progress-bar"
-id="progressBar">
+<div class="progress-bar" id="progressBar"></div>
 </div>
 
-</div>
+<h3 id="timer">⏳ Time Left: 15</h3>
 
-<h3 id="timer">
-⏳ Time Left: 15
-</h3>
-
-<h2 id="question">
-Question Loading...
-</h2>
+<h2 id="question">Loading Quiz...</h2>
 
 <div id="answers"></div>
 
-<button id="nextBtn"
-onclick="nextQuestion()">
-Next Question
-</button>
+<button id="nextBtn" onclick="nextQuestion()">Next Question</button>
 
 <div id="score"></div>
 
 </div>
 
-<!-- QUESTIONS FILE -->
-
 <script src="questions.js"></script>
-
-<!-- MAIN QUIZ SCRIPT -->
 
 <script>
 
 let current = 0;
 let score = 0;
-
 let timeLeft = 15;
 let timer;
 
-const correctSound =
-new Audio("https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3");
+const correctSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3");
+const wrongSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3");
 
-const wrongSound =
-new Audio("https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3");
-
-const question =
-document.getElementById("question");
-
-const answers =
-document.getElementById("answers");
-
-const nextBtn =
-document.getElementById("nextBtn");
-
-const progressBar =
-document.getElementById("progressBar");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("nextBtn");
+const progressBar = document.getElementById("progressBar");
 
 function startTimer(){
-
 clearInterval(timer);
-
 timeLeft = 15;
 
-document.getElementById("timer")
-.innerText =
-"⏳ Time Left: " + timeLeft;
-
 timer = setInterval(()=>{
-
 timeLeft--;
-
-document.getElementById("timer")
-.innerText =
-"⏳ Time Left: " + timeLeft;
+document.getElementById("timer").innerText = "⏳ Time Left: " + timeLeft;
 
 if(timeLeft <= 0){
-
 clearInterval(timer);
-
 nextQuestion();
-
 }
-
 },1000);
-
 }
 
 function updateProgress(){
-
-let progress =
-((current)/quiz.length)*100;
-
-progressBar.style.width =
-progress + "%";
-
+if(!quiz || quiz.length === 0) return;
+progressBar.style.width = ((current)/quiz.length)*100 + "%";
 }
 
 function loadQuestion(){
 
-startTimer();
+// 🔥 SAFETY FIX (IMPORTANT)
+if(!quiz || quiz.length === 0){
+questionEl.innerText = "❌ Questions load nahi ho rahe";
+return;
+}
 
+startTimer();
 updateProgress();
 
 nextBtn.style.display="none";
 
 let q = quiz[current];
 
-question.innerText = q.question;
-
-answers.innerHTML = "";
+questionEl.innerText = q.question;
+answersEl.innerHTML = "";
 
 q.answers.forEach(answer=>{
-
-let div =
-document.createElement("div");
-
+let div = document.createElement("div");
 div.classList.add("option");
-
 div.innerText = answer;
 
 div.onclick = ()=>checkAnswer(answer);
 
-answers.appendChild(div);
-
+answersEl.appendChild(div);
 });
-
 }
 
 function checkAnswer(answer){
@@ -260,46 +193,26 @@ clearInterval(timer);
 
 let correct = quiz[current].correct;
 
-let options =
-document.querySelectorAll(".option");
-
-options.forEach(option=>{
-
+document.querySelectorAll(".option").forEach(option=>{
 option.style.pointerEvents="none";
 
 if(option.innerText === correct){
-
 option.style.background="#22c55e";
-
 }
 
-if(
-option.innerText === answer
-&&
-answer !== correct
-){
-
+if(option.innerText === answer && answer !== correct){
 option.style.background="red";
-
 }
-
 });
 
 if(answer === correct){
-
 score++;
-
 correctSound.play();
-
-}
-else{
-
+}else{
 wrongSound.play();
-
 }
 
 nextBtn.style.display="block";
-
 }
 
 function nextQuestion(){
@@ -307,34 +220,20 @@ function nextQuestion(){
 current++;
 
 if(current < quiz.length){
-
 loadQuestion();
+}else{
 
-}
-else{
+progressBar.style.width="100%";
 
-progressBar.style.width = "100%";
-
-question.innerText =
-"🎉 Quiz Finished!";
-
-answers.innerHTML = "";
-
+questionEl.innerText="🎉 Quiz Finished!";
+answersEl.innerHTML="";
 nextBtn.style.display="none";
 
-document.getElementById("timer")
-.innerText = "";
+document.getElementById("timer").innerText="";
 
-document.getElementById("score")
-.innerHTML =
-
-"🏆 Your Score: "
-+ score
-+ " / "
-+ quiz.length;
-
+document.getElementById("score").innerHTML=
+"🏆 Your Score: " + score + " / " + quiz.length;
 }
-
 }
 
 loadQuestion();
