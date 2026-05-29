@@ -314,37 +314,91 @@ setTimeout(()=>d.remove(),800);
 }
 
 function check(ans){
+
+clearInterval(timer);
+
 let q=quiz[i];
 let correctText=q.o[q.c];
 
 let opt=document.querySelectorAll(".option");
+
 opt.forEach(o=>o.style.pointerEvents="none");
 
 if(ans===q.c){
+
 score++;
-pop("+1","green");
+
+document.getElementById("ok").play();
+
+pop("+1 Correct ✔","green");
+
 opt[ans].classList.add("correct");
+
 }else{
+
 score--;
-pop("-1","red");
+
+document.getElementById("no").play();
+
+pop("-1 Wrong ❌","red");
+
 opt[ans].classList.add("wrong");
+
 opt[q.c].classList.add("correct");
+
 }
 
 document.getElementById("score").innerText=score;
 
 /* show answer */
+
+document.getElementById("ansBox").innerHTML=
+"✅ Correct Answer: "+correctText;
+
 setTimeout(()=>{
+
+document.getElementById("ansBox").innerHTML="";
+
 i++;
+
 load();
-},1200);
+
+},1500);
+
 }
 
-function next(){
-i++;
-load();
+function togglePreview(){
+
+let p=document.getElementById("preview");
+
+if(p.style.display==="block"){
+p.style.display="none";
+return;
 }
 
+p.style.display="block";
+p.innerHTML="";
+
+quiz.forEach((q,idx)=>{
+
+let d=document.createElement("div");
+
+d.className="previewItem";
+
+d.innerText=(idx+1)+". "+q.q;
+
+d.onclick=()=>{
+i=idx;
+load();
+p.style.display="none";
+};
+
+p.appendChild(d);
+
+});
+
+}
+  
 load();
 
 </script>
