@@ -145,6 +145,17 @@ margin-top:15px;
 
 let quiz=[];
 
+function add(section, questions){
+    questions.forEach(q=>{
+        quiz.push({
+            sec: section,
+            q: q.q,
+            o: q.o,
+            c: q.c
+        });
+    });
+} 
+
 /* GK QUESTIONS HERE */
  add("GK",[
 {q:"Indian Constitution adopted on?",o:["26 Nov 1949","26 Jan 1950","15 Aug 1947","24 Jan 1950"],c:0},
