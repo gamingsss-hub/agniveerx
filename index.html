@@ -4,228 +4,133 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AgniveerX Quiz - Army GD, Technical, Clerk Mock Test</title>
-<meta name="description" content="Free Agniveer Army Quiz, GK, Maths, Physics, English and Reasoning Mock Tests">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>AgniveerX Quiz Hub</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+font-family:Poppins,sans-serif;
 }
 
 body{
-height:100vh;
-background:
-linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.8)),
-url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1200&auto=format&fit=crop');
-background-size:cover;
-background-position:center;
+min-height:100vh;
+background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
-color:white;
+padding:20px;
 }
 
-.card{
-width:92%;
-max-width:520px;
-background:rgba(15,23,42,0.88);
-backdrop-filter:blur(10px);
-padding:30px;
-border-radius:25px;
+.container{
+width:100%;
+max-width:1100px;
 text-align:center;
-box-shadow:0 0 30px rgba(0,230,255,0.4);
-border:1px solid rgba(255,255,255,0.1);
-animation:show 1s ease;
-}
-
-@keyframes show{
-from{
-transform:translateY(30px);
-opacity:0;
-}
-to{
-transform:translateY(0);
-opacity:1;
-}
 }
 
 .logo{
-font-size:60px;
-margin-bottom:10px;
-animation:float 2s infinite ease-in-out;
-}
-
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-8px);}
-100%{transform:translateY(0);}
-}
-
-h1{
-font-size:34px;
-margin-bottom:8px;
+font-size:45px;
+font-weight:900;
 color:#00e6ff;
+margin-bottom:10px;
+text-shadow:0 0 20px #00e6ff;
 }
 
 .sub{
 color:#cbd5e1;
-font-size:15px;
-margin-bottom:25px;
-}
-
-.stats{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:20px;
-}
-
-.box{
-background:#111827;
-padding:14px;
-border-radius:14px;
-font-size:14px;
-border:1px solid rgba(255,255,255,0.05);
-}
-
-.box span{
-display:block;
-font-size:20px;
-font-weight:bold;
-margin-top:5px;
-color:#fbbf24;
-}
-
-.startBtn{
-width:100%;
-padding:16px;
-border:none;
-border-radius:14px;
-margin-top:28px;
-background:linear-gradient(45deg,#00e6ff,#22c55e);
+margin-bottom:40px;
 font-size:18px;
-font-weight:700;
-cursor:pointer;
-transition:0.3s;
-color:black;
 }
 
-.startBtn:hover{
-transform:scale(1.03);
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
 }
 
-.features{
-margin-top:25px;
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
+.card{
+background:#1e293b;
+border-radius:20px;
+padding:30px;
+text-decoration:none;
+color:white;
+transition:.3s;
+box-shadow:0 0 15px rgba(0,0,0,.4);
 }
 
-.tag{
-background:#0f172a;
-padding:8px 14px;
-border-radius:30px;
-font-size:12px;
-border:1px solid rgba(255,255,255,0.08);
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 0 25px #00e6ff;
+}
+
+.icon{
+font-size:70px;
+margin-bottom:15px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.desc{
+color:#cbd5e1;
+line-height:1.5;
 }
 
 .footer{
-margin-top:25px;
-font-size:12px;
+margin-top:40px;
 color:#94a3b8;
+font-size:14px;
 }
-
-.install{
-margin-top:18px;
-font-size:13px;
-color:#22c55e;
-animation:blink 1.5s infinite;
-}
-
-@keyframes blink{
-50%{opacity:0.5;}
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
-<div class="logo">🎖</div>
+<div class="logo">🔥 AGNIVEERX QUIZ</div>
 
-<h1>AGNIVEERX QUIZ PRO</h1>
-
-<p class="sub">
-Indian Army Agniveer Full Preparation Platform
-</p>
-
-<div class="stats">
-
-<div class="box">
-Questions
-<span>500+</span>
+<div class="sub">
+Army GD • Clerk • Technical Mock Tests
 </div>
 
-<div class="box">
-Subjects
-<span>5</span>
+<div class="cards">
+
+<a href="gd.html" class="card">
+<div class="icon">🪖</div>
+<div class="title">Army GD</div>
+<div class="desc">
+GK, Maths, English, Reasoning & Army GD Practice Tests
 </div>
+</a>
 
-<div class="box">
-Timer Quiz
-<span>LIVE</span>
+<a href="clerk.html" class="card">
+<div class="icon">📚</div>
+<div class="title">Army Clerk</div>
+<div class="desc">
+Clerk Exam Practice, Computer, English & General Knowledge
 </div>
+</a>
 
-<div class="box">
-Leaderboard
-<span>PRO</span>
+<a href="technical.html" class="card">
+<div class="icon">⚙️</div>
+<div class="title">Army Technical</div>
+<div class="desc">
+Physics, Chemistry, Maths & Technical Questions
 </div>
+</a>
 
-</div>
-
-<div class="features">
-
-<div class="tag">⚡ Real Exam Pattern</div>
-<div class="tag">🔥 Daily Quiz</div>
-<div class="tag">🏆 Leaderboard</div>
-<div class="tag">🪙 Coins Rewards</div>
-<div class="tag">📊 Analytics</div>
-<div class="tag">🌙 Dark UI</div>
-<div class="tag">🇮🇳 Hindi + English</div>
-
-</div>
-
-<button class="startBtn" onclick="startQuiz()">
-🚀 START QUIZ
-</button>
-
-<div class="install">
-📲 Install App Supported
 </div>
 
 <div class="footer">
-Made For Agniveer Warriors 🇮🇳
+© 2026 AgniveerX Quiz Hub
 </div>
 
 </div>
-
-<script>
-
-function startQuiz(){
-window.location.href="quiz.html";
-}
-
-</script>
 
 </body>
 </html>
